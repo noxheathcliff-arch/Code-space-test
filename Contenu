@@ -1,0 +1,413 @@
+# Document final — Contenu essentiel d'un site mobile-first de liste de courses pour adultes peu à l'aise avec les appareils
+
+Workflow `essentiel-ux` complet — Phases A, B, C validées étape par étape le 2026-08-27.
+
+⚠️ **Rappel constant : les étoiles mesurent l'importance d'un élément, jamais son ordre d'apparition ni sa proéminence visuelle.** Ce document définit le QUOI (contenu, informations, fonctions) ; la forme visuelle (composants, layouts, hiérarchie graphique) relève d'une étape ultérieure.
+
+---
+
+## Phase A — Cadrage validé
+
+### Objectif du produit
+Site mobile-first ultra intuitif pour tenir une liste de courses et garder trace des produits habituellement achetés (avec leurs prix en monnaie locale et une image optionnelle), destiné à un large public d'adultes peu à l'aise avec les appareils électroniques. Principe directeur : **rendre les actions fréquentes faciles, rendre les actions dangereuses difficiles, et rendre toutes les erreurs récupérables.**
+
+### Problèmes réels visés
+1. Les outils actuels supposent une aisance numérique que le public cible n'a pas (navigation à plusieurs niveaux, icônes ambiguës, feedback flou après action).
+2. Les actions destructrices sont trop faciles : listes supprimées sans avertissement et irrécupérables (plaintes documentées).
+3. Les erreurs sont — ou paraissent — irréversibles : pas d'annulation visible, peur de « tout casser », retour au papier.
+4. Pollution parasite (pubs, popups, nags premium, comptes obligatoires) qui désoriente et détourne du geste simple.
+
+### Pertinence : ★★★★☆
+Les alternatives abondent (Listonic, Bring!, La Liste de Courses…), mais aucune n'est conçue d'abord autour de la faible littératie numérique, de la prévention des erreurs et de la réversibilité. Les frictions documentées (suppressions accidentelles, feedback ambigu, sollicitations) confirment un problème réel non résolu.
+
+### Persona majeur (proto-persona, à confronter à des utilisateurs réels)
+**Monique, 58 ans** — *« J'ai peur d'appuyer au mauvais endroit et de tout effacer. »*
+- **Activités** : courses 2-3×/semaine ; ~70 % des mêmes produits ; liste papier ou dictée à un proche.
+- **Attitudes** : conviction qu'une mauvaise manipulation « casse tout » ; ferme les popups au hasard.
+- **Aptitudes** : sait toucher et scroller ; tape lentement avec fautes ; ignore les gestes cachés (appui long, swipe).
+- **Motivations** : ne rien oublier au magasin, sans dépendre de quelqu'un et sans se sentir stupide.
+- **Objectifs de fin** : constituer sa liste en quelques gestes ; retrouver ses habituels sans les retaper ; cocher au magasin ; ne jamais rien perdre définitivement.
+- **Objectifs d'expérience** : se sentir en contrôle, rassurée que toute erreur est rattrapable.
+
+---
+
+## Phase B — Liste brute des besoins validée
+
+
+Persona incarné : **Monique, 58 ans** — faible aisance numérique, peur de « tout casser », rachète ~70 % des mêmes produits chaque semaine.
+
+Échelle utilisée : **grille d'importance des éléments** (★★★★★ = constitutif, ★☆☆☆☆ = accessoire). Les étoiles indiquent l'importance, jamais un ordre d'apparition.
+
+Chaque besoin est formulé en termes de contenu/fonction (le QUOI), jamais de forme visuelle.
+
+---
+
+### 1. Construire sa liste (à la maison)
+
+| Besoin / information / fonction | Importance | Justification (retraçable au persona) |
+|---|---|---|
+| Ajouter un produit à la liste en un geste unique et évident, sans étape intermédiaire | ★★★★★ | C'est l'acte constitutif du produit ; chaque étape supplémentaire est un point d'abandon pour Monique. |
+| Retrouver ses produits habituels sans avoir à les retaper (le site se souvient de ce qu'elle achète) | ★★★★★ | 70 % des achats sont répétitifs ; taper est sa friction n°1 (lenteur, fautes). Sans ça, le produit perd sa raison d'être face au papier. |
+| Ajouter un produit sans que l'orthographe exacte compte (tolérance aux fautes, reconnaissance approximative) | ★★★★☆ | Elle tape lentement avec des fautes ; un produit introuvable pour une faute = sentiment d'être stupide = abandon. |
+| Pouvoir ajouter un produit à la voix (dicter au lieu de taper) | ★★★☆☆ | Contourne totalement le clavier, sa pire friction — mais la liste reste constructible sans. |
+| Voir immédiatement et sans ambiguïté que le produit vient d'être ajouté (confirmation perceptible de chaque action) | ★★★★★ | Étude usabilité seniors : « feedback flou après ajout » = erreur dominante → doublons, doute, re-tentatives. Le contrat de confiance repose dessus. |
+| Préciser une quantité simple si besoin (« 2 », « un pack ») sans que ce soit obligatoire | ★★★☆☆ | Besoin réel au magasin, mais toute saisie obligatoire est une barrière ; le nom seul doit suffire. |
+| Ajouter une précision libre à un produit (marque, « bien mûres ») sans champ obligatoire | ★★☆☆☆ | Confort réel mais contournable — elle le sait de tête pour ses produits habituels. |
+| Voir la liste en cours à tout moment, complète, sans navigation (rien de caché derrière un menu) | ★★★★★ | Elle ne connaît pas le vocabulaire des interfaces ; ce qui n'est pas visible n'existe pas pour elle. |
+| Comprendre d'un coup d'œil combien d'articles restent à acheter | ★★★☆☆ | Rassure sur l'état de la liste avant de partir ; besoin récurrent avant chaque départ. |
+
+### 2. Les produits habituels (mémoire du foyer)
+
+| Besoin / information / fonction | Importance | Justification |
+|---|---|---|
+| Disposer d'un répertoire personnel de produits déjà achetés, reconnaissables d'un coup d'œil (nom + repère visuel) | ★★★★★ | C'est la 2e moitié de l'identité du produit (« garder trace des produits habituels ») ; elle reconnaît visuellement mieux qu'elle ne lit. |
+| Remettre un produit habituel dans la liste en un seul geste | ★★★★★ | Le scénario dominant (70 % des achats) doit être le chemin le plus court de toute l'interface. |
+| Que ce répertoire se construise tout seul à partir de ce qu'elle ajoute (aucune gestion manuelle exigée) | ★★★★☆ | Toute tâche de « gestion » explicite ne sera jamais faite ; le répertoire doit émerger de l'usage. |
+| Voir en premier les produits qu'elle reprend le plus souvent | ★★★☆☆ | Réduit la recherche dans le répertoire au fil des mois ; perte de valeur réelle sans, mais utilisable. |
+| Retirer un produit du répertoire (elle n'achète plus ce produit) — avec la même réversibilité que le reste | ★★☆☆☆ | Besoin rare ; le répertoire reste utilisable même un peu encombré. |
+| Corriger un produit existant (nom mal saisi, précision à changer) sans devoir le supprimer et le recréer | ★★★☆☆ | Ses fautes de frappe sont fréquentes ; la correction douce évite le détour risqué par la suppression. |
+| Mémoriser le prix constaté d'un produit, affiché dans sa monnaie locale, pour ne pas avoir à le retenir de tête | ★★★☆☆ | Besoin réel et récurrent exprimé : le répertoire sert aussi de mémoire des prix ; le produit reste utilisable sans, mais avec une vraie perte de valeur. |
+| Mettre à jour ce prix facilement quand il change en magasin, l'ancien restant rattrapable comme toute modification | ★★☆☆☆ | Les prix bougent ; sans mise à jour facile, la mémoire des prix se périme et perd sa raison d'être. |
+| Voir le total approximatif de la liste en cours à partir des prix connus | ★★☆☆☆ | Découle naturellement des prix mémorisés ; aide à anticiper la dépense, mais contournable. |
+| Associer une image à un produit (photo prise ou choisie), sans que ce soit jamais obligatoire | ★★☆☆☆ | Elle reconnaît visuellement mieux qu'elle ne lit ; renforce le repère visuel du répertoire — confort réel, produit pleinement utilisable sans. |
+
+### 3. Au magasin
+
+| Besoin / information / fonction | Importance | Justification |
+|---|---|---|
+| Marquer un produit comme « pris » d'un geste simple, réversible d'un geste tout aussi simple | ★★★★★ | C'est l'usage en rayon, une main sur le caddie ; se tromper de ligne arrivera — le retour doit être aussi facile que l'aller. |
+| Distinguer sans effort ce qui est pris de ce qui reste à prendre | ★★★★★ | La raison d'être de la liste au magasin ; l'ambiguïté = produits oubliés = échec du produit. |
+| Garder les produits « pris » consultables (pas de disparition immédiate qui ressemble à une suppression) | ★★★★☆ | Une ligne qui disparaît instantanément = panique « j'ai tout effacé » ; elle doit pouvoir vérifier. |
+| Que la liste fonctionne même sans connexion en magasin, sans rien perdre | ★★★★☆ | Les supermarchés captent mal ; une liste vide en rayon une seule fois = retour définitif au papier. |
+| Lire la liste confortablement dans les conditions du magasin (lisibilité forte, texte largement dimensionnable) | ★★★★☆ | Presbytie fréquente du public cible + lecture debout en mouvement. |
+| Ranger les produits dans un ordre qui suit à peu près les rayons (regroupement par famille de produits) | ★★★☆☆ | Évite les allers-retours en rayon ; besoin récurrent mais la liste reste utilisable sans. |
+| Terminer les courses et repartir sur une liste propre pour la prochaine fois, sans que rien d'historique soit perdu | ★★★★☆ | Le cycle hebdomadaire doit se réamorcer sans opération de « nettoyage » risquée à sa charge. |
+
+### 4. Sécurité, erreurs et réversibilité (le cœur différenciant)
+
+| Besoin / information / fonction | Importance | Justification |
+|---|---|---|
+| Toute action destructrice (vider la liste, supprimer un produit du répertoire) exige une friction volontaire et explicite | ★★★★★ | C'est l'exigence fondatrice exprimée : facile pour le fréquent, difficile pour le dangereux. Plaintes réelles documentées : « liste supprimée sans avertissement ». |
+| Toute action, même destructrice, est annulable après coup pendant un délai généreux | ★★★★★ | La réversibilité est l'autre exigence fondatrice ; c'est ce qui supprime la peur qui bloque Monique. |
+| L'annulation est proposée d'elle-même au moment de l'erreur (pas à retrouver dans un recoin) | ★★★★★ | Monique ne sait pas chercher une fonction « annuler » ; si l'issue de secours n'est pas sous ses yeux, elle n'existe pas. |
+| Une liste ou des produits récemment supprimés restent récupérables plusieurs jours | ★★★★☆ | Le remords tardif (« mais où est ma liste ?! ») est documenté dans les avis réels ; la récupération différée sauve la confiance. |
+| Aucune action dangereuse n'est déclenchable par un geste accidentel (frôlement, double tape, geste caché) | ★★★★★ | Public « maladroit » par définition ; les gestes involontaires sont la norme, pas l'exception. |
+| Les messages (confirmations, avertissements) sont en langage courant, courts, avec une issue évidente et sans jargon | ★★★★☆ | Elle ferme les popups au hasard ; un avertissement incompris est pire qu'inutile — il fait cliquer n'importe où. |
+| L'état du travail est enregistré en continu, sans notion de « sauvegarder » à sa charge | ★★★★☆ | La notion même de sauvegarde est un concept technique qu'elle ne doit jamais rencontrer. |
+
+### 5. Entrer dans le produit (première fois et retours)
+
+| Besoin / information / fonction | Importance | Justification |
+|---|---|---|
+| Utiliser le site immédiatement, sans création de compte préalable | ★★★★☆ | Le tunnel compte/mot de passe est un mur documenté pour ce public (« locked out of an app I never had to log into »). |
+| Retrouver sa liste et son répertoire d'une visite à l'autre sur le même téléphone, sans identifiant | ★★★★★ | Si elle doit se « reconnecter » pour retrouver sa liste, le produit est mort pour elle. |
+| Comprendre dès le premier écran, sans tutoriel, quoi faire (le premier geste utile est auto-évident) | ★★★★★ | Elle ne lira pas un tutoriel ; le produit doit s'expliquer par son contenu même. |
+| Pouvoir récupérer sa liste sur un nouveau téléphone par un mécanisme très simple, assisté par un proche si besoin | ★★★☆☆ | Changement de téléphone = moment réel de perte ; un proche aidant est souvent disponible pour cette opération ponctuelle. |
+| Aucune sollicitation parasite : pas de publicité, pas d'incitation d'abonnement interruptive, pas de demande de notifications/localisation non indispensable | ★★★★☆ | Les nags documentés désorientent précisément ce public et déclenchent des actions au hasard. |
+| L'interface reste stable dans le temps (pas de réorganisation surprise des repères appris) | ★★★☆☆ | Ses repères sont appris par position ; les « refontes » documentées font fuir les utilisateurs fragiles. Contrainte de conception plus que feature. |
+
+### 6. Partage avec le foyer (à trancher)
+
+| Besoin / information / fonction | Importance | Justification |
+|---|---|---|
+| Partager la liste avec un proche du foyer (chacun voit et complète la même liste) | ★★★☆☆ | Cas réel fréquent (le conjoint ajoute « pain ») et présent dans toutes les alternatives — mais le produit tient debout en solo, et tout mécanisme d'invitation est une friction énorme pour ce public. Tranché : retenu dans le périmètre. |
+| Si partage : voir qu'un produit a été ajouté par l'autre, sans ambiguïté sur « qui a mis ça » | ★★☆☆☆ | Évite la confusion « je n'ai jamais ajouté ça, le site est cassé » — pertinent seulement si le partage existe. |
+
+---
+
+**Ajouts validés le 2026-08-27** (demande utilisateur, évalués avec la grille) : correction de produit (★★★☆☆), prix mémorisé en monnaie locale (★★★☆☆) + mise à jour du prix (★★☆☆☆) + total approximatif de la liste (★★☆☆☆), image optionnelle par produit (★★☆☆☆). La suppression de produits avec réversibilité figurait déjà aux sections 2 et 4. Partage foyer (section 6) : retenu dans le périmètre.
+
+---
+
+## Phase C — Organisation validée en 6 features
+
+
+Chaque feature existe uniquement parce que des besoins validés de la Phase B l'exigent. Aucune section conventionnelle ajoutée par réflexe (pas de « À propos », pas de « Paramètres » autonome : les rares réglages émergent des besoins eux-mêmes).
+
+1. **La liste en cours** — construire, consulter et ajuster la liste avant les courses (besoins section 1 + quantité/précision + total approximatif).
+2. **Le répertoire des produits habituels** — mémoire auto-construite des produits, avec prix en monnaie locale, image optionnelle, correction et retrait (besoins section 2 + ajouts validés).
+3. **Les courses en magasin** — cocher/décocher, distinguer pris/restant, hors-ligne, ordre par familles de produits, clôture du cycle (besoins section 3).
+4. **Le filet de sécurité** — réversibilité universelle, friction sur le destructif, récupération différée, messages en langage courant, enregistrement continu (besoins section 4). Transversal : il contraint toutes les autres features.
+5. **L'entrée et la continuité** — usage immédiat sans compte, persistance sur l'appareil, premier geste auto-évident, migration vers un nouveau téléphone, zéro sollicitation parasite, stabilité des repères (besoins section 5).
+6. **Le partage foyer** — liste commune du foyer, attribution des ajouts (besoins section 6).
+
+Ordre de traitement en C2 (une feature par échange, validation entre chaque) : 1 → 2 → 3 → 4 → 5 → 6.
+
+---
+
+### Feature 1 : La liste en cours
+
+Persona incarné : Monique prépare ses courses, à la maison, souvent en plusieurs fois dans la semaine (elle pense à un produit en cuisinant, un autre devant le frigo vide).
+
+Rappel : les étoiles = importance, jamais ordre d'apparition. Tout est formulé en contenu/fonction, jamais en forme.
+
+### 1.1 Ajouter un produit
+
+- Un seul point d'entrée d'ajout, toujours au même endroit, toujours disponible quand la liste est visible (★★★★★)
+  - L'ajout par saisie accepte les fautes d'orthographe et propose le produit voulu malgré elles (★★★★☆)
+  - Pendant la saisie, les produits du répertoire correspondants sont proposés au fur et à mesure, pour finir en une reconnaissance plutôt qu'une saisie complète (★★★★☆)
+    - Les propositions privilégient les produits qu'elle reprend le plus souvent (★★★☆☆)
+  - Un produit jamais acheté peut être ajouté tel quel, même inconnu du répertoire — la liste n'exige aucun référentiel préalable (★★★★★)
+  - L'ajout à la voix : elle dicte le nom, le produit rejoint la liste avec les mêmes confirmations que la saisie (★★★☆☆)
+    - Si la dictée est mal comprise, le résultat reste corrigeable comme toute saisie (★★★☆☆)
+- Confirmation immédiate et non ambiguë de chaque ajout : le produit apparaît dans la liste, visiblement, à l'instant du geste (★★★★★)
+  - Si le produit est déjà dans la liste, le signaler clairement au lieu de créer un doublon silencieux — avec le choix évident d'augmenter la quantité ou de laisser tel quel (★★★★☆)
+
+### 1.2 Le contenu d'une ligne de la liste
+
+- Le nom du produit, dominant et lisible (★★★★★)
+- Le repère visuel du produit s'il existe (image associée ou repère par défaut de sa famille) (★★☆☆☆)
+- La quantité, uniquement si elle a été précisée — jamais de « 1 » imposé qui encombre (★★★☆☆)
+- La précision libre si elle existe (marque, « bien mûres ») (★★☆☆☆)
+- Le dernier prix connu du produit, dans la monnaie locale, s'il est renseigné dans le répertoire (★★★☆☆)
+
+### 1.3 Ajuster la liste avant de partir
+
+- Retirer un produit de la liste d'un geste simple — retrait annulable immédiatement, proposition d'annulation visible au moment même (★★★★★)
+- Modifier la quantité ou la précision d'une ligne sans passer par suppression/re-création (★★★☆☆)
+- Corriger le nom d'un produit mal saisi directement depuis la liste (★★★☆☆)
+
+### 1.4 Vue d'ensemble avant de partir
+
+- La liste complète est visible d'un seul tenant, sans navigation ni contenu caché (★★★★★)
+- Le nombre d'articles de la liste est connu d'un coup d'œil (★★★☆☆)
+- Le total approximatif est affiché à partir des prix connus, dans la monnaie locale, clairement présenté comme approximatif (★★☆☆☆)
+  - Les produits sans prix connu sont identifiables comme non comptés dans ce total (★☆☆☆☆)
+- Une liste vide dit elle-même quoi faire (elle explique le premier geste d'ajout, en langage courant) (★★★★☆)
+
+### 1.5 Vider ou abandonner une liste (action dangereuse)
+
+- Vider entièrement la liste exige une friction volontaire, explicite et en langage courant — jamais accessible par un geste accidentel (★★★★★)
+- Après un vidage, l'annulation complète est proposée d'elle-même et la liste reste récupérable plusieurs jours (★★★★★)
+
+
+---
+
+### Feature 2 : Le répertoire des produits habituels
+
+Persona incarné : Monique rachète ~70 % des mêmes produits. Elle ne veut ni les retaper, ni retenir leurs prix. Elle reconnaît les produits d'un coup d'œil, pas par des menus.
+
+Rappel : étoiles = importance, pas ordre d'apparition. Contenu/fonctions uniquement.
+
+### 2.1 Constitution du répertoire
+
+- Le répertoire se construit tout seul : chaque produit ajouté à une liste y entre automatiquement, sans démarche de « création de fiche » (★★★★★)
+- Aucun répertoire à remplir avant de pouvoir se servir du produit — il est vide au début et c'est normal (★★★★★)
+- Un même produit resaisi avec une petite variation (faute, pluriel) est reconnu comme le produit existant, pas dupliqué (★★★★☆)
+
+### 2.2 Consulter le répertoire
+
+- Tous les produits déjà achetés sont consultables en un seul endroit (★★★★☆)
+- Les produits les plus fréquemment repris apparaissent en premier (★★★★☆)
+- Chaque produit est reconnaissable d'un coup d'œil : nom dominant + repère visuel (image si fournie, sinon repère de famille) (★★★☆☆)
+- Un produit du répertoire montre son dernier prix connu, dans la monnaie locale (★★★☆☆)
+  - Et depuis quand ce prix date, en langage courant (« prix noté il y a 2 mois ») pour situer sa fiabilité (★★☆☆☆)
+- Retrouver un produit précis dans le répertoire par une recherche tolérante aux fautes (★★★☆☆)
+- Savoir si un produit du répertoire est déjà dans la liste en cours (★★★☆☆)
+
+### 2.3 Remettre un produit dans la liste
+
+- Depuis le répertoire, un produit rejoint la liste en un seul geste évident (★★★★★)
+- Confirmation immédiate et non ambiguë que le produit est bien dans la liste (★★★★★)
+- Le même geste répété ne crée pas de doublon silencieux (même règle que Feature 1.1) (★★★★☆)
+
+### 2.4 La fiche d'un produit
+
+Contenu consultable et corrigeable d'un produit :
+- Le nom, corrigeable à tout moment sans supprimer le produit ni perdre son historique (★★★☆☆)
+- Le prix constaté, saisissable et modifiable simplement, toujours dans la monnaie locale — la monnaie est réglée une fois et n'est plus jamais redemandée (★★★☆☆)
+  - Mettre à jour le prix est un geste court : le nouveau prix remplace l'ancien sans étape technique (★★☆☆☆)
+- L'image optionnelle : peut être ajoutée (photo ou image existante), remplacée ou retirée — le produit fonctionne intégralement sans image (★★☆☆☆)
+- La précision libre habituelle (marque préférée…) mémorisée pour les prochains ajouts (★★☆☆☆)
+- Toute modification est enregistrée d'elle-même, aucune action « sauvegarder » (★★★★★)
+
+### 2.5 Retirer un produit du répertoire (action dangereuse)
+
+- Retirer un produit exige une intention explicite, jamais un geste accidentel (★★★★★)
+- Le retrait est annulable immédiatement, avec proposition d'annulation visible au moment même (★★★★★)
+- Le produit retiré reste récupérable plusieurs jours (mêmes règles que le filet de sécurité, Feature 4) (★★★★☆)
+- Retirer un produit du répertoire ne casse rien : s'il est dans la liste en cours, il y reste (★★★☆☆)
+
+
+---
+
+### Feature 3 : Les courses en magasin
+
+Persona incarné : Monique est dans le magasin, un panier ou caddie à la main, téléphone dans l'autre. Éclairage variable, réseau parfois absent, gestes moins précis (debout, en mouvement, parfois gantée en rayon frais). Elle coche au fur et à mesure et veut savoir en permanence ce qui lui reste.
+
+Rappel : étoiles = importance, pas ordre d'apparition. Contenu/fonctions uniquement.
+
+### 3.1 Cocher un produit pris
+
+- Marquer un produit comme pris est LE geste le plus facile de tout le produit : une seule action directe sur la ligne, cible large, aucun geste caché (★★★★★)
+- Le changement d'état est immédiatement visible et non ambigu — impossible de douter si « ça a marché » (★★★★★)
+- Décocher (produit remis en rayon, coche par erreur) est exactement aussi facile que cocher — symétrie complète (★★★★★)
+- Cocher/décocher ne supprime jamais rien et n'exige jamais de confirmation : action fréquente ET intrinsèquement réversible (★★★★★)
+
+### 3.2 Suivre l'avancement
+
+- Distinguer d'un coup d'œil les produits pris de ceux qui restent (★★★★★)
+- Les produits restants dominent la vue ; les produits pris restent consultables sans disparaître (elle vérifie « j'ai bien pris le lait ? ») (★★★★☆)
+- Le nombre d'articles restants est connu en permanence (★★★★☆)
+- Quand tout est pris, le produit le dit clairement, en langage courant (★★★☆☆)
+- Le total approximatif déjà pris / restant, d'après les prix connus, en monnaie locale (★★☆☆☆)
+
+### 3.3 Ordre de parcours
+
+- Les produits peuvent être regroupés par famille (fruits et légumes, frais, épicerie…) pour suivre l'ordre des rayons (★★★☆☆)
+  - Les familles sont proposées d'elles-mêmes, jamais une corvée de classement imposée ; un produit non classé reste parfaitement utilisable (★★★☆☆)
+  - Le regroupement est optionnel : la liste simple reste disponible telle quelle (★★★☆☆)
+
+### 3.4 Ajouts et imprévus en rayon
+
+- Ajouter un produit oublié directement pendant les courses, avec le même geste d'ajout qu'à la maison (★★★★☆)
+- Noter le prix constaté en rayon d'un geste court, pour alimenter le répertoire (★★☆☆☆)
+
+### 3.5 Conditions réelles du magasin
+
+- Tout fonctionne sans connexion : consulter, cocher, décocher, ajouter — sans message d'erreur ni différence visible ; la resynchronisation se fait seule au retour du réseau (★★★★★)
+- Lisibilité en conditions de magasin : texte suffisamment grand par défaut, contrastes forts (★★★★☆)
+- La taille du texte peut être augmentée, réglage simple et mémorisé (★★★☆☆)
+- La liste reste accessible immédiatement après une interruption (appel, poche, écran éteint) : on revient exactement où on était (★★★★☆)
+
+### 3.6 Terminer les courses (clôture du cycle)
+
+- Terminer les courses est une action volontaire, explicite et en langage courant — jamais automatique ni déclenchable par accident (★★★★☆)
+- Après clôture, repartir sur une liste propre : les produits pris quittent la liste, les produits non pris sont proposés à conserver pour la prochaine fois (★★★★☆)
+- La clôture est annulable immédiatement et la liste terminée reste récupérable plusieurs jours (★★★★★)
+- L'historique utile est préservé : les fréquences et prix du répertoire sont mis à jour par les courses terminées (★★★☆☆)
+
+
+---
+
+### Feature 4 : Le filet de sécurité (transversal)
+
+Persona incarné : Monique, dont la peur fondatrice est « appuyer au mauvais endroit et tout effacer ». Cette feature est transversale : elle contraint toutes les autres. C'est le différenciateur du produit — facile pour le fréquent, friction pour le dangereux, tout est rattrapable.
+
+Rappel : étoiles = importance, pas ordre d'apparition. Contenu/fonctions uniquement.
+
+### 4.1 Règle universelle de réversibilité
+
+- Toute action qui retire ou détruit quelque chose (produit de la liste, produit du répertoire, liste vidée, courses clôturées) est annulable (★★★★★)
+- L'annulation est proposée d'elle-même, immédiatement après l'action, sans qu'on ait à la chercher — visible assez longtemps pour une lectrice lente (★★★★★)
+- L'annulation restaure tout à l'identique : produit, quantité, prix, image, position — jamais de restauration partielle (★★★★☆)
+- Annuler est aussi facile que l'action annulée — jamais de friction sur le rattrapage (★★★★★)
+
+### 4.2 Friction volontaire sur le destructif
+
+- Aucune action destructrice n'est déclenchable par un geste accidentel : jamais par simple toucher, jamais par un geste caché, jamais adjacente à une action fréquente (★★★★★)
+- Les actions destructrices exigent une intention explicite en deux temps, dont la portée est dite en langage courant (« Tu vas vider toute la liste : 14 produits ») (★★★★★)
+- La confirmation nomme ce qui va se passer ET rappelle que c'est rattrapable (« tu pourras la récupérer pendant 30 jours ») — la friction rassure au lieu d'inquiéter (★★★★☆)
+- Gradation : plus l'action détruit, plus la friction est grande — retirer un produit < vider une liste < effacer définitivement (★★★★☆)
+
+### 4.3 Récupération différée (au-delà de l'annulation immédiate)
+
+- Tout élément supprimé (produit, liste, produit du répertoire) reste récupérable pendant un délai généreux de plusieurs semaines (★★★★★)
+- Un endroit unique et nommé en langage courant regroupe tout ce qui a été supprimé récemment (★★★★☆)
+- Chaque élément récupérable montre ce que c'est, quand il a été supprimé et le temps restant, en langage courant (« supprimé hier, récupérable encore 29 jours ») (★★★☆☆)
+- Récupérer un élément est un geste simple qui remet tout à sa place (★★★★☆)
+- L'effacement définitif n'est jamais exigé : l'expiration se fait seule ; l'effacement manuel immédiat existe mais porte la friction maximale (★★☆☆☆)
+
+### 4.4 Langage et messages
+
+- Tous les messages sont courts, en langage courant, sans aucun jargon (jamais « synchronisation », « cache », « erreur 400 ») (★★★★★)
+- Chaque message dit ce qui s'est passé et ce qu'on peut faire — jamais un état sans issue (★★★★☆)
+- Les choix proposés sont explicites sur leurs conséquences : jamais « OK / Annuler » ambigus, mais « Vider la liste » / « Garder ma liste » (★★★★★)
+- Aucun message ne culpabilise ni n'alarme inutilement : ton calme, factuel, rassurant (★★★☆☆)
+
+### 4.5 Enregistrement continu
+
+- Tout changement est enregistré à l'instant où il se produit — fermer, éteindre, être interrompu ne fait jamais rien perdre (★★★★★)
+- Aucune action « sauvegarder » n'existe nulle part dans le produit (★★★★★)
+- Le produit n'affiche jamais d'inquiétude technique sur l'enregistrement : c'est un acquis silencieux, pas un statut à surveiller (★★★☆☆)
+
+
+---
+
+### Feature 5 : L'entrée et la continuité
+
+Persona incarné : Monique découvre le produit (souvent installé/montré par un proche), l'ouvre pour la première fois, puis y revient pendant des mois. Elle ne retient pas les mots de passe, ne lit pas les tutoriels, ferme les popups au hasard, et changera un jour de téléphone.
+
+Rappel : étoiles = importance, pas ordre d'apparition. Contenu/fonctions uniquement.
+
+### 5.1 Première utilisation
+
+- Le produit est utilisable pleinement dès la première ouverture : aucun compte, aucun mot de passe, aucun e-mail exigé pour aucun parcours essentiel (★★★★★)
+- Aucun tutoriel, aucune visite guidée, aucun écran d'accueil à franchir : la première ouverture EST déjà la liste (★★★★★)
+- Le premier geste (ajouter un produit) se comprend tout seul : le produit vide explique lui-même quoi faire, en une phrase de langage courant (★★★★★)
+- Aucune demande de permission ou de réglage n'est posée avant d'avoir servi à quelque chose ; celles qui sont indispensables (ex : monnaie locale) sont proposées au moment exact où elles ont du sens, avec une proposition par défaut sensée (★★★★☆)
+
+### 5.2 Revenir au produit
+
+- La liste et le répertoire sont retrouvés tels quels à chaque ouverture, sur le même téléphone, sans identifiant ni question (★★★★★)
+- L'ouverture ramène toujours au même endroit : la liste en cours — repère fixe, jamais un écran surprise (★★★★☆)
+
+### 5.3 Zéro sollicitation parasite
+
+- Aucune publicité, aucun popup, aucune incitation (notation, premium, nouveautés, notifications non demandées) ne vient jamais interrompre l'usage (★★★★★)
+- Le produit ne demande jamais rien qu'il peut déduire ou différer (★★★★☆)
+
+### 5.4 Stabilité des repères
+
+- Les emplacements des fonctions et les mots employés restent stables dans le temps : une évolution ne déplace ni ne renomme jamais les repères appris (★★★★☆)
+- Aucune fonctionnalité saisonnière ou expérimentale ne modifie l'usage quotidien (★★★☆☆)
+
+### 5.5 Changer de téléphone (avec l'aide d'un proche)
+
+- Toutes les données (listes, répertoire, prix, images) peuvent être retrouvées sur un nouveau téléphone (★★★★☆)
+- Le transfert est conçu pour être fait en une fois, guidé pas à pas, avec l'aide d'un proche : chaque étape dit quoi faire en langage courant (★★★☆☆)
+- Le transfert n'exige ni compte préexistant ni mot de passe mémorisé : le lien entre les deux téléphones s'établit par un moyen simple à l'instant du transfert (★★★☆☆)
+- Tant que le transfert n'est pas confirmé réussi, rien n'est effacé de l'ancien téléphone (★★★★☆)
+
+### 5.6 Les rares réglages
+
+Seuls réglages qui émergent des besoins validés — aucun autre :
+- La monnaie locale : réglée une fois, jamais redemandée, modifiable (★★★☆☆)
+- La taille du texte : simple, mémorisée (déjà posée en Feature 3.5) (★★★☆☆)
+- Ces réglages sont regroupés en un endroit unique, nommé en langage courant, qui contient peu de choses (★★★☆☆)
+
+
+---
+
+### Feature 6 : Le partage foyer
+
+Persona incarné : Monique partage sa liste avec son mari ou sa fille. Aujourd'hui elle dicte ou envoie des messages ; les oublis et doublons viennent du fait que chacun a « sa » version. Contrainte validée en Phase B : le partage ne doit jamais coûter plus de complexité qu'il ne rend de service — et ne doit jamais dégrader l'usage solo.
+
+Rappel : étoiles = importance, pas ordre d'apparition. Contenu/fonctions uniquement.
+
+### 6.1 Le partage est optionnel et invisible tant qu'inutilisé
+
+- Le produit fonctionne intégralement sans partage : rien dans l'usage solo n'y fait référence ni ne le réclame (★★★★★)
+- Le partage se découvre au moment où on en a besoin, pas avant (★★★☆☆)
+
+### 6.2 Inviter un proche
+
+- Inviter se fait par un moyen que le foyer utilise déjà (envoyer un lien/une invitation par la messagerie habituelle) — jamais par création de comptes croisés ou saisie d'identifiants (★★★★☆)
+- L'invitation dit en langage courant ce qu'elle fait (« Tu pourras voir et compléter la liste de courses avec moi ») (★★★☆☆)
+- Le proche qui accepte arrive directement sur la liste partagée, avec les mêmes règles d'entrée sans friction (Feature 5) (★★★★☆)
+- C'est typiquement le proche « à l'aise » qui fait la manœuvre : chaque étape doit pouvoir être faite POUR Monique, pas seulement PAR elle (★★★☆☆)
+
+### 6.3 Vivre avec une liste partagée
+
+- La liste est la même pour tout le foyer : un ajout, une coche ou un retrait de l'un est vu par l'autre (★★★★☆)
+- Les changements des autres apparaissent sans geste de rafraîchissement, et de façon repérable — jamais une liste qui change silencieusement sous les yeux (★★★★☆)
+- Savoir qui a ajouté un produit quand on se pose la question — information disponible mais discrète, jamais imposée sur chaque ligne (★★☆☆☆)
+- Cocher au magasin pendant que l'autre ajoute depuis la maison fonctionne sans conflit ni message technique (★★★★☆)
+- Hors connexion, chacun continue de travailler normalement ; les changements se réconcilient seuls au retour du réseau, sans jamais perdre l'ajout de quiconque (★★★★☆)
+
+### 6.4 Le filet de sécurité s'étend au foyer
+
+- Les suppressions d'un membre restent récupérables par tous, selon les mêmes règles que la Feature 4 (★★★★☆)
+- L'annulation d'une action reste possible même si c'est l'autre qui l'a faite (★★★☆☆)
+
+### 6.5 Arrêter le partage (action dangereuse)
+
+- Quitter ou retirer le partage exige une intention explicite, avec sa portée dite en langage courant (« Vous ne verrez plus la même liste ») (★★★★☆)
+- Arrêter le partage ne détruit aucune donnée : chacun conserve la liste et le répertoire en l'état (★★★★☆)
+- L'arrêt est annulable dans la foulée (ré-inviter reste simple) (★★★☆☆)
+
+
+---
+
+**Fin du document. Rappel final : les étoiles indiquent l'importance, jamais l'ordre d'apparition. Prochaine étape (hors de ce workflow) : conception de la forme — architecture, wireframes, composants.**
+
