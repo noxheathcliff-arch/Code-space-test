@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/accessibility_service_description"
+    android:settingsActivity="com.izumih.flowreply.ui.MainActivity"
+    android:accessibilityEventTypes="typeWindowContentChanged|typeWindowStateChanged|typeViewTextChanged"
+    android:packageNames="com.whatsapp,com.facebook.orca,com.instagram.android,com.twitter.android,com.snapchat.android,com.google.android.apps.messaging,com.android.mms,com.google.android.talk"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:notificationTimeout="100"
+    android:accessibilityFlags="flagRetrieveInteractiveWindows|flagRequestFilterKeyEvents|flagReportViewIds"
+    android:canRetrieveWindowContent="true"/>
