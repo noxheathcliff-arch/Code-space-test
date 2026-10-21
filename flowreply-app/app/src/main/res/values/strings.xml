@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FlowReply</string>
+    <string name="accessibility_service_description">FlowReply utilise l\'accessibilité pour lire les messages visibles à l\'écran et insérer une réponse générée par IA, uniquement lorsque vous le demandez en touchant la bulle. Les messages ne sont pas stockés ; ils sont envoyés à l\'API Google Gemini pour générer la réponse.</string>
+
+    <string name="bubble_notification_title">FlowReply actif</string>
+    <string name="bubble_notification_text">Touchez la bulle pour générer une réponse</string>
+    <string name="bubble_content_description">Générer une réponse FlowReply</string>
+
+    <string name="generating">Génération en cours…</string>
+    <string name="reply_inserted">Réponse insérée</string>
+    <string name="generation_failed">Échec : %1$s</string>
+    <string name="error_accessibility_off">Activez le service d\'accessibilité FlowReply.</string>
+</resources>
