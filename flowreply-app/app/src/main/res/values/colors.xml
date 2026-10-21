@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Used by the overlay bubble (drawn outside Compose, so defined here). -->
+    <color name="bubble_background">#5B5BD6</color>
+    <color name="bubble_foreground">#FFFFFF</color>
+    <color name="bubble_outline">#E3E0FF</color>
+</resources>
