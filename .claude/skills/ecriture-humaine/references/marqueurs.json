@@ -6,7 +6,7 @@
       "\\b(?:deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingt|trente|quarante|cinquante|soixante|cent|mille)\\b",
       "\\b(?:lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)s?\\b",
       "\\b(?:\\d+|une?|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|quinze|vingt|trente|quarante|cinquante|soixante)\\s?(?:heures?|h\\d*|minutes?|secondes?)\\b",
-      "\\b(?:café|cuisine|téléphone|portable|écran|carnet|tiroir|machine à \\w+|frigo|réfrigérateur|tasse|évier|dossier)\\b"
+      "\\b(?:café|cuisine|téléphone|portable|écran|carnet|tiroir|machine à \\w+|frigo|réfrigérateur|(?:une|la|sa|ma|ta|leur|des|les|ses|mes|de) tasses?|évier|dossier)\\b"
     ]
   },
   "formules": {

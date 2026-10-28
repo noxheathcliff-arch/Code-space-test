@@ -238,6 +238,8 @@ def signaler(phrases, marqueurs=None, nlp_dispo=False, genre='fiction'):
                 out.append((i, code, ', '.join(dict.fromkeys(trouves))))
         if nlp_dispo and est_fragment(p):
             out.append((i, 'S3', 'fragment sans verbe'))
+        if genre == 'fiction' and t.rstrip().endswith('!'):
+            out.append((i, 'E1', 'exclamation en narration : à justifier par la voix (au plus 1 pour 300 mots hors répliques)'))
     # monotonie : 5 phrases narratives de longueurs trop proches
     lg = [phrases[i].mots for i in narr_idx]
     for k in range(len(lg) - 4):
@@ -252,5 +254,5 @@ LIBELLES = {
     'V1': 'Virgule avant « et »', 'V2': 'Phrase hachée de virgules', 'P1': 'Deux-points d\'annonce',
     'C1': 'Ouverture courte', 'C2': 'Rafale de phrases courtes', 'O1': 'Ouverture répétée', 'O2': 'Série de pronoms sujets',
     'L1': 'Formule IA', 'L2': 'Accessoire de fausse concrétude', 'L3': '« On » générique', 'S1': 'Contraste correctif',
-    'S3': 'Fragment sans verbe', 'R1': 'Monotonie de longueur',
+    'S3': 'Fragment sans verbe', 'R1': 'Monotonie de longueur', 'E1': 'Exclamation en narration',
 }

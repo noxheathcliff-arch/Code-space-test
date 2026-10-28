@@ -118,7 +118,7 @@ Trop bas (mesure secondaire) : repérer 2 à 4 endroits où deux phrases juxtapo
 ## R-EXPR : expressivité (passe 4)
 
 - **Fiction, points de suspension absents** : les placer là où la voix hésite, s'interrompt ou laisse une pensée en suspens (fin de réplique, fin de paragraphe intérieur). Jamais plus d'un par paragraphe.
-- **Exclamations** : dans les répliques et la voix intérieure en colère ou exaltée. Pas dans la narration neutre.
+- **Exclamations** : dans les répliques et la voix intérieure en colère ou exaltée. Pas dans la narration neutre. **E1** (exclamation en narration) : au plus 1 pour 300 mots. Sinon, transformer en verdict sec (« Menteuse. »), en question, ou en phrase affirmative qui porte le jugement par ses mots.
 - **Incises de dialogue neutres** : supprimer l'incise si le locuteur est clair ; sinon verbe d'attitude ou incise d'action (`construction.md` §I).
 - **Non-fiction** : une parenthèse d'aparté ou d'exemple, une pointe d'humour, si la fiche l'autorise.
 

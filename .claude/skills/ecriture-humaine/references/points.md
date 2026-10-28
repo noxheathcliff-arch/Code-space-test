@@ -41,6 +41,8 @@ Les valeurs sont des poids par occurrence, pour un passage ramené à 50 mots. U
 | Points | Construction | Exemple |
 |---|---|---|
 | −0,75 / −0,73 / −0,67 | **phrase qui finit sur « ! » ou « … »** (voix vive, en fiction) | « Quelle idiote ! » ; « Si seulement il avait su… » |
+
+> **Attention, biais connu du barème.** Les fins en « ! » et « … » sont si bien notées que la sélection par variantes les multiplie. Lors du test, les exclamations sont passées de 3 à 10 dans une scène de 1 000 mots. Plafonds, quel que soit le score : **en narration, au plus 1 exclamation pour 300 mots** (code E1 du diagnostic), et **au plus un « … » par paragraphe**. Au-delà, c'est un nouveau tic. On prend alors une autre construction humaine du tableau : possessif, verbes coordonnés, adjectif antéposé.
 | −0,62 / −0,45 | **pronom + auxiliaire + adverbe** (« je n'ai jamais », « il a déjà ») | « Je n'ai jamais aimé ce quartier. » |
 | −0,61 / −0,50 | **adjectif avant le nom** et **nom encadré d'adjectifs** | « une sale petite manie », « un énorme malentendu » |
 | −0,57 / −0,52 / −0,49 | **verbes coordonnés par « et »** (sujet partagé) | « Il enjambe les débris et marche sur le verre. » |
