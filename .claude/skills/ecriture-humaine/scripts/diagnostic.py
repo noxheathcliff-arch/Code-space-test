@@ -45,9 +45,13 @@ LIB = {
     'fragments_1000': ('Fragments sans verbe / 1000', 'R-RYTH'),
 }
 SEUIL_DELTA = 0.35
+# Mesures « défauts » : en avoir zéro n'est jamais une sur-correction.
+SANS_PLANCHER = {'accessoires_1000', 'formules_1000', 'contrastes_1000', 'on_1000', 'deux_points_1000',
+                 'guillemets_1000', 'virgule_et_1000', 'ouv_repetee_pct', 'incises_neutres_pct',
+                 'fragments_1000', 'para_ouvre_courte_pct'}
 
 
-def verdict(val, e):
+def verdict(val, e, cle=None):
     """✓ zone humaine ; ~ limite ; ✗ côté IA ; ⚠ sur-correction (au-delà de l'humain, à l'opposé de l'IA)."""
     h, d = e['humain'], e.get('delta', 0)
     if val is None or h is None:
@@ -55,7 +59,7 @@ def verdict(val, e):
     if d > 0:  # l'IA est au-dessus
         if val > h['p90']: return '✗'
         if val > h['p75']: return '~'
-        if val < h['p10'] and h['p10'] > 0: return '⚠'
+        if val < h['p10'] and h['p10'] > 0 and cle not in SANS_PLANCHER: return '⚠'
         return '✓'
     else:
         if val < h['p10']: return '✗'
@@ -89,7 +93,7 @@ def rapport(m, phrases, flags, profil, genre, maxp, avant=None, nlp_ok=True):
         if abs(e.get('delta', 0)) < SEUIL_DELTA:
             continue
         v = m[k]
-        vd = verdict(v, e)
+        vd = verdict(v, e, k)
         h, ia = e['humain'], e.get('ia') or {}
         av = f'{avant[k]:.2f} | ' if avant and avant.get(k) is not None else ('— | ' if avant else '')
         L.append(f'| {lib} | {v:.2f} | {av}{h["p10"]:.2f}–{h["p90"]:.2f} | {ia.get("p50", float("nan")):.2f} | {vd} | {regle} |')
