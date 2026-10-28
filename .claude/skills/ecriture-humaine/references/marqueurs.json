@@ -1,0 +1,44 @@
+{
+  "_note": "Marqueurs mesurés sur le corpus de calibration (3 livres humains, ~190 000 mots ; 114 textes IA Claude Haiku/Sonnet/Opus, ~95 000 mots, mêmes genres). Un marqueur IA n'est pas interdit : c'est sa DENSITÉ qui trahit. Voir references/donnees-calibration.md.",
+  "accessoires": {
+    "explication": "Fausse concrétude : l'IA simule le réel avec des nombres écrits en lettres, des jours, des horaires et des objets domestiques (×3 à ×9 par rapport aux humains).",
+    "motifs": [
+      "\\b(?:deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingt|trente|quarante|cinquante|soixante|cent|mille)\\b",
+      "\\b(?:lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)s?\\b",
+      "\\b(?:\\d+|\\w+)\\s?(?:heures?|minutes?|secondes?)\\b",
+      "\\b(?:café|cuisine|téléphone|portable|écran|carnet|tiroir|machine à \\w+|frigo|réfrigérateur|tasse|évier|dossier)\\b"
+    ]
+  },
+  "formules": {
+    "explication": "Tournures sur-représentées chez l'IA dans les trois genres (ratio ≥ 2,5 et présentes dans des textes issus de consignes différentes).",
+    "motifs": [
+      "\\bce qui compte\\b", "\\b(?:c'est|ce n'est) pas grave\\b", "\\bquelque part\\b", "\\bquelque chose d[e']",
+      "\\bpresque(?: toujours)?\\b", "\\bplutôt que\\b", "\\bà voix basse\\b", "\\bse tai[st]\\w*\\b",
+      "\\bcette phrase\\b", "\\bune phrase\\b", "\\bun mot\\b", "\\bles mots\\b", "\\bpeu à peu\\b", "\\ben permanence\\b",
+      "\\bcomme on\\b", "\\boù l'on\\b|\\boù on\\b", "\\bdont on\\b", "\\bil suffit\\b", "\\bau fond\\b",
+      "\\bnommer\\b|\\bnomme[rz]?\\b", "\\breconna[iî]t\\w*\\b", "\\bréparer\\b|\\brépare\\b", "\\beffac\\w+\\b", "\\bdéborde\\w*\\b",
+      "\\bretomb\\w+\\b", "\\bse construi\\w+\\b", "\\bpas tout à fait\\b", "\\bni (?:plus|moins)\\b", "\\bsans un mot\\b"
+    ]
+  },
+  "contrastes": {
+    "explication": "Structure de correction/contraste typique de l'IA : poser ce que la chose n'est pas pour dire ce qu'elle est.",
+    "motifs": [
+      "\\bce n'est pas\\b[^.!?]{0,80}\\bc'est\\b", "\\bce n'était pas\\b[^.!?]{0,80}\\bc'était\\b",
+      "\\bil ne s'agit pas\\b", "\\bnon pas\\b", "\\bn'est pas (?:un|une) \\w+[^.!?]{0,40}, (?:c'est|mais)\\b",
+      "\\bpas\\b[^.!?,;]{1,50}, mais\\b", "\\bmoins\\b[^.!?]{1,50}\\bque\\b[^.!?]{1,50}\\bplus\\b"
+    ]
+  },
+  "ressources_humaines": {
+    "explication": "Liaisons et tournures que les auteurs humains du corpus emploient 3 à 40 fois plus que l'IA. Ce sont des RESSOURCES à réintroduire à dose humaine, pas des mots à placer partout.",
+    "motifs": [
+      "\\blorsque?\\b|\\blorsqu'", "\\bafin (?:de|d'|que|qu')", "\\bainsi\\b", "\\b(?:un|une|de) tel(?:le)?s?\\b", "\\bdès lors\\b", "\\bde sorte que\\b",
+      "\\bpar conséquent\\b", "\\bnéanmoins\\b", "\\bbien que\\b", "\\bgrâce à\\b|\\bgrâce aux?\\b", "\\bà présent\\b", "\\bà nouveau\\b",
+      "\\ben plus de\\b|\\ben plus\\b", "\\ben même temps\\b", "\\bde plus en plus\\b", "\\bde temps en temps\\b", "\\bpar la suite\\b",
+      "\\bau cœur de\\b", "\\bà l'intérieur de\\b", "\\bà l'aide de\\b", "\\bau niveau de\\b", "\\bse concentr\\w+\\b", "\\bfaire face\\b|\\bfait face\\b",
+      "\\bse produi\\w+\\b", "\\bs'avér\\w+\\b|\\bs'avère\\w*\\b", "\\bparv\\w+ à\\b", "\\bcapables? de\\b", "\\bil s'agit\\b",
+      "\\bmalheureusement\\b", "\\babsolument\\b", "\\bconstamment\\b", "\\btotalement\\b", "\\bcertainement\\b", "\\bsoudain(?:ement)?\\b",
+      "\\bfermement\\b", "\\bégalement\\b", "\\btandis que\\b", "\\bdès que\\b", "\\balors que\\b", "\\bpuisque?\\b|\\bpuisqu'"
+    ]
+  },
+  "pronoms_sujet": ["je", "j", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"]
+}
