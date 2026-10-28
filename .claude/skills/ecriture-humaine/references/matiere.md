@@ -8,22 +8,20 @@ Pour chaque décision qui compte (le détail qui caractérise un lieu, le geste 
 
 ```
 CHOIX : (ex. le détail qui montre que la chambre a été fouillée)
-1. … (p≈0,35) ← ce que presque tout le monde écrirait
-2. … (p≈0,20)
-3. … (p≈0,15)
-4. … (p≈0,10)
-5. … (p≈0,05)
-6. … (p≈0,03)
-RETENU : n° … parce que … (plausible, juste pour CE narrateur ou CET argument, et pas le plus attendu)
+1. … ← le plus attendu : ce que presque tout le monde écrirait
+2. …
+3. …
+4. … ← le moins attendu encore plausible
+RETENU : n° … parce que … (juste pour CE narrateur ou CET argument, et pas le plus attendu)
 ```
 
 Règles :
-- les probabilités sont une estimation honnête de « ce qu'un modèle écrirait spontanément » ;
+- les options sont classées du plus au moins attendu. Il est inutile de chiffrer des probabilités : le classement suffit ;
 - on écarte l'option 1 sauf raison explicite ;
 - on écarte aussi ce qui est improbable *et* gratuit (l'étrange pour l'étrange) ;
-- on retient en général une option entre 2 et 5 qui dit quelque chose du personnage ou de l'argument.
+- on retient en général une option 2 ou 3 qui dit quelque chose du personnage ou de l'argument.
 
-C'est une transposition du *verbalized sampling* (Zhang et al., 2025), qui augmente nettement la diversité des sorties créatives sans entraînement. Il s'applique aux **décisions de contenu**, pas à chaque phrase : 3 à 8 choix par texte de 1 000 mots suffisent.
+C'est une transposition du *verbalized sampling* (Zhang et al., 2025), qui augmente nettement la diversité des sorties créatives sans entraînement. Il s'applique aux **décisions de contenu**, pas à chaque phrase : **3 à 5 choix** par texte de 1 000 mots suffisent. Au-delà, le coût dépasse le gain.
 
 ## 2. Tri anti-accessoires (obligatoire)
 
@@ -31,7 +29,7 @@ Passer chaque élément concret au crible :
 
 | Accessoire | Garder seulement si… | Sinon |
 |---|---|---|
-| Nombre précis (« quarante minutes », « trois ans », « dix-neuf heures ») | le nombre a une conséquence dans le texte | approximation humaine (« une bonne heure », « des années ») ou rien |
+| Nombre précis (« quarante minutes », « trois ans », « dix-neuf heures ») | le nombre a une conséquence dans le texte, ou il **est** l'information (heures de sommeil recommandées, prix, dose) ; on l'écrit alors en chiffres s'il est technique | approximation humaine (« une bonne heure », « des années ») ou rien |
 | Jour de la semaine, date, heure | l'intrigue ou l'argument en dépend | supprimer |
 | Objet domestique standard (café, tasse, cuisine, téléphone, écran, tiroir, carnet, dossier) | il appartient en propre au personnage ou à la situation | le remplacer par un objet qui *caractérise* (un objet que seul ce personnage aurait), ou rien |
 | Prénom plus âge exact d'un enfant ou d'un cas (« Sacha, 7 ans ») | le cas est développé et l'âge importe | « un petit garçon », « la fille d'une amie », ou un cas réel fourni |
@@ -47,7 +45,7 @@ Passer chaque élément concret au crible :
 ## 4. Non-fiction : ancrage
 
 - **Sources** : uniquement réelles et vérifiables (auteur, ouvrage, institution). Jamais « des études montrent » seul. Jamais de chercheur, de chiffre ou de titre inventé. Si l'utilisateur n'en fournit pas et que l'on n'en connaît aucune avec certitude, on écrit sans source plutôt qu'avec une fausse, ou on marque `[SOURCE À FOURNIR]`.
-- **Expérience d'auteur** : les auteurs humains du corpus parlent en « nous » ou en « je » de leur pratique, de leurs enfants, de leurs patients. On ne l'invente pas. On la demande à l'utilisateur, ou on prend la forme du cas illustratif assumé (« Prenons une mère qui… »). On peut aussi écrire `[ANECDOTE PERSONNELLE À FOURNIR : situation où…]`.
+- **Expérience d'auteur** : les auteurs humains du corpus parlent en « nous » ou en « je » de leur pratique, de leurs enfants, de leurs patients. On ne l'invente pas. On la demande à l'utilisateur, ou on prend la forme du cas illustratif assumé (« Prenons une mère qui… »), qui est un procédé humain courant et légitime. On peut aussi écrire `[ANECDOTE PERSONNELLE À FOURNIR : situation où…]`. Le « nous » inclusif (« lorsque nous sommes fatigués ») reste toujours disponible.
 - **Introduire par un cas**, puis généraliser. On ne fait pas l'inverse, et on ne commence jamais par démonter une idée reçue (« On dit que… C'est faux. ») : c'est un tic IA systématique en vulgarisation.
 - **Une image filée** sur plusieurs paragraphes (le lecteur de DVD intérieur qu'on met sur pause, qu'on rembobine…) plutôt qu'une analogie par section expliquée dans la phrase suivante.
 - **Renvois internes** quand le texte s'inscrit dans un ensemble (« nous y reviendrons », « comme au chapitre précédent »). Les textes humains en contiennent, les textes IA jamais.

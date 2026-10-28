@@ -9,9 +9,9 @@
 | Virgules / 1000 mots | **37-58** · 86 | **33-52** · 70 | **47-70** · 78 | **37-69** · 74 |
 | « , et » / 1000 mots | **0-2** · 7 | **0-2** · 5 | 1-7 · 6 | 0-6 · 6 |
 | Deux-points / 1000 | **0-2** · 4 | 1-12 · 9 | **2-11** · 12 | 1-12 · 10 |
-| Longueur moyenne de phrase | **11-16,5** · 11 | 12-18 · 13 | **14-22** · 15 | 12,5-21 · 14 |
-| % phrases ≥ 30 mots | 0-8 | **1-14** · 3 | **5-21** · 6 | 3-20 · 5 |
-| % phrases ≤ 5 mots | **4-25** · 29 | 4-26 | 2-27 | 4-27 |
+| Longueur moyenne de phrase (**plafond strict**) | **11,5-17** · 11,5 | 13-19,5 · 13 | **15,5-23** · 16 | 13,5-22,5 · 15,5 |
+| % phrases ≥ 30 mots | 0-9 | **1,5-20** · 4,5 | **6-24** · 9 | 3-24 · 6 |
+| % phrases ≤ 5 mots | **3-22** · 28 | 3-23 · 13 | 0-16 · 7 | 2-21 · 9 |
 | « on » / 1000 | **0-4,5** · 6 | **0-4,5** · 8 | **0-4** · 7 | **0-4,5** · 8 |
 | « nous » / 1000 | 0-7 | 0-27 | **3-21** · 0 | **0-22** · 1 |
 | Adjectifs par nom | **0,23-0,35** · 0,20 | 0,3-0,5 · 0,33 | 0,3-0,4 · 0,27 | 0,3-0,5 · 0,28 |
@@ -25,6 +25,10 @@
 
 En gras : les écarts les plus discriminants pour le genre.
 
+**Mesures primaires et secondaires.** Les mesures de ponctuation, de « on », d'accessoires, de formules, de longueur et d'ouverture sont **primaires** : on les corrige. Les autres sont **secondaires** : adjectifs par nom, prépositions, coordination, subordination, participes, adverbes en -ment, liaisons. Elles sont le *résultat* d'une bonne construction et ne se visent pas en ajoutant des mots. On les améliore en appliquant §B2 à la place de la juxtaposition. Si la seule façon d'y arriver est d'ajouter un adjectif ou un connecteur décoratif, on accepte l'écart.
+
+**Le piège n° 1 du pipeline.** Les tests le montrent : réduire les virgules et fusionner les phrases courtes **allonge les phrases au-delà de la zone humaine**. Les 4 scènes de test sont toutes passées au-dessus de 17 mots de moyenne. La longueur moyenne a un **plafond strict** : au-delà de la zone, le diagnostic signale ⚠. Une fusion ne se fait que si la phrase obtenue reste lisible d'une traite.
+
 ## A. Ponctuation
 
 **A1. Virgules : diviser par deux le réflexe.** La virgule est le premier marqueur IA (δ = +0,86 à +1,00 dans tous les genres). D'où viennent les virgules en trop, et ce qu'il faut faire à la place :
@@ -33,13 +37,17 @@ En gras : les écarts les plus discriminants pour le genre.
 - **Incises de circonstance** (« Dans la cuisine, sur la table, il y avait… ») → les intégrer sans virgule (« Il y avait sur la table de la cuisine… »).
 - **Participiales détachées** en fin de phrase (« …, les mains dans les poches, le regard ailleurs ») → au plus une par paragraphe.
 
+**On garde les virgules qui servent la lecture.** Celle qui suit un complément circonstanciel long placé en tête (« Au bout de trois jours sans nouvelles, elle… »), celles qui encadrent une vraie incise, celle qui précède « mais ». La chasse vise les énumérations, les appositions en série et « , et ». Dans le doute, lire la phrase sans la virgule : si on bute, on la remet.
+
 **A2. Pas de virgule avant « et ».** Les humains coordonnent sans virgule (fiction : 1 pour 1000 mots contre 7 chez l'IA). La construction typiquement humaine est le **verbe coordonné à sujet partagé** :
 > IA : « Il ouvre la porte, et il entre sans un bruit. »
 > Humain : « Il ouvre la porte et entre sans un bruit. »
 
 Si les sujets diffèrent et que la phrase est longue, préférer une subordination (« tandis que », « alors que », « lorsque ») à « , et ».
 
-**A3. Deux-points : quasi interdits en narration.** Les deux-points de révélation (« Il n'y avait qu'une explication : quelqu'un était entré »), d'annonce (« Résultat : l'enfant se ferme ») et de liste mise en scène sont des marqueurs IA. En non-fiction, les garder pour une liste réellement annoncée ou une citation, sans dépasser la zone.
+**A3. Deux-points.**
+- **Fiction** : quasi interdits en narration. Les deux-points de révélation (« Il n'y avait qu'une explication : quelqu'un était entré ») sont un marqueur IA.
+- **Non-fiction** : les humains en emploient aussi (zone de 1 à 12 pour 1000 mots), pour annoncer une liste, une explication ou une citation. Ce qui trahit l'IA, c'est le deux-points **d'étiquette** : un ou quelques mots puis deux-points (« Résultat : », « Le piège : », « La clé : »). Le script ne signale que ceux-là en non-fiction.
 
 **A4. Guillemets hors dialogue.** L'IA cite à tout bout de champ des phrases-types (« Tu peux me dépanner ? »). En non-fiction pratique, la zone humaine est proche de **zéro**. Passer au discours indirect (« quand un collègue vous demande de le dépanner »).
 
@@ -47,7 +55,12 @@ Si les sujets diffèrent et que la phrase est longue, préférer une subordinati
 
 ## B. Construction de la phrase
 
-**B1. Longueur.** Plus long que le réflexe IA, sans tomber dans le pavé : fiction 13 à 16 mots en moyenne, non-fiction 15 à 20. En non-fiction, 8 à 20 % des phrases dépassent 30 mots. Elles se construisent par **expansion interne**, pas par empilement de virgules.
+**B1. Longueur.** Plus long que le réflexe IA, sans tomber dans le pavé :
+- fiction : 13 à 16 mots en moyenne, **jamais plus de 17** ;
+- pratique : 15 à 18 ;
+- explicatif et essai : 17 à 21.
+
+En non-fiction, 5 à 20 % des phrases dépassent 30 mots. Elles se construisent par **expansion interne**, pas par empilement de virgules. La longueur vient de quelques phrases longues bien construites, à côté de phrases moyennes et de rares courtes, et non d'un allongement uniforme de toutes les phrases.
 
 **B2. Les six procédés d'expansion humaine** (à préférer à la virgule) :
 1. **Complément du nom** : « le grincement de la porte du garage », « la peur du rejet chez l'enfant ».
@@ -87,7 +100,10 @@ Règles : jamais trois phrases de suite ouvertes par un pronom sujet ; jamais de
 
 ## F. Lexique
 
-- **Liaisons** (« ressources humaines », sous-employées par l'IA d'un facteur 4 à 10) : « lorsque », « afin de », « ainsi », « alors que », « tandis que », « dès que », « bien que », « à nouveau », « à présent », « en même temps », « de plus en plus », « grâce à », « il s'agit de », « malheureusement », « constamment », « également ». Dose : la zone du genre (fiction 3 à 12 pour 1000 mots, non-fiction 5 à 15). Au-delà, c'est un nouveau tic (⚠).
+- **Liaisons** (« ressources humaines », sous-employées par l'IA d'un facteur 4 à 10) : « lorsque », « afin de », « ainsi », « alors que », « tandis que », « dès que », « bien que », « à nouveau », « à présent », « en même temps », « de plus en plus », « grâce à », « il s'agit de », « malheureusement », « constamment », « également ».
+  - Elles naissent d'un **raisonnement** : une cause, une condition, une concession, un moment. Une liaison remplace une juxtaposition existante ; on ne l'ajoute jamais par-dessus.
+  - Jamais la même liaison deux fois en 300 mots, jamais deux dans la même phrase.
+  - Dose : la zone du genre (fiction 3 à 12 pour 1000 mots, non-fiction 5 à 15). Si elle n'est pas atteinte sans forcer, on accepte l'écart (mesure secondaire). Les tests ont montré qu'un connecteur plaqué (« puisque » cinq fois, « malheureusement » sans raison) devient aussitôt un nouveau tic.
 - **Formules IA** à éviter (liste complète dans `marqueurs.json`) : « ce qui compte », « ce n'est pas grave », « quelque part », « quelque chose de… », « presque », « plutôt que », « peu à peu », « en permanence », « à voix basse », « sans un mot », « cette phrase », « un mot », « comme on + verbe », « il faut » répété, « En somme », « Autrement dit », « ni X ni Y ».
 - **Contraste correctif** (« ce n'est pas X, c'est Y » ; « ne… pas X, mais Y ») : au plus un par texte, jamais en fin de paragraphe.
 - **Accessoires** : voir `matiere.md` §2.

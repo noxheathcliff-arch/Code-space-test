@@ -5,19 +5,26 @@
     "motifs": [
       "\\b(?:deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingt|trente|quarante|cinquante|soixante|cent|mille)\\b",
       "\\b(?:lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)s?\\b",
-      "\\b(?:\\d+|\\w+)\\s?(?:heures?|minutes?|secondes?)\\b",
+      "\\b(?:\\d+|une?|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|quinze|vingt|trente|quarante|cinquante|soixante)\\s?(?:heures?|h\\d*|minutes?|secondes?)\\b",
       "\\b(?:café|cuisine|téléphone|portable|écran|carnet|tiroir|machine à \\w+|frigo|réfrigérateur|tasse|évier|dossier)\\b"
     ]
   },
   "formules": {
-    "explication": "Tournures sur-représentées chez l'IA dans les trois genres (ratio ≥ 2,5 et présentes dans des textes issus de consignes différentes).",
+    "explication": "Tournures sur-représentées chez l'IA dans les trois genres (ratio ≥ 2,5 et présentes dans des textes issus de consignes différentes). Signalées phrase par phrase (L1).",
     "motifs": [
       "\\bce qui compte\\b", "\\b(?:c'est|ce n'est) pas grave\\b", "\\bquelque part\\b", "\\bquelque chose d[e']",
-      "\\bpresque(?: toujours)?\\b", "\\bplutôt que\\b", "\\bà voix basse\\b", "\\bse tai[st]\\w*\\b",
-      "\\bcette phrase\\b", "\\bune phrase\\b", "\\bun mot\\b", "\\bles mots\\b", "\\bpeu à peu\\b", "\\ben permanence\\b",
-      "\\bcomme on\\b", "\\boù l'on\\b|\\boù on\\b", "\\bdont on\\b", "\\bil suffit\\b", "\\bau fond\\b",
+      "\\bpresque(?: toujours)?\\b", "\\bplutôt que\\b", "\\bà voix basse\\b",
+      "\\bcette phrase\\b", "\\bpeu à peu\\b", "\\ben permanence\\b",
+      "\\bcomme on\\b", "\\bdont on\\b", "\\bil suffit\\b", "\\bau fond\\b(?! d)",
+      "\\bpas tout à fait\\b", "\\bni (?:plus|moins)\\b", "\\bsans un mot\\b"
+    ]
+  },
+  "mots_surveilles": {
+    "explication": "Mots simples sur-représentés chez l'IA. Ils comptent dans la densité « formules » mais ne sont pas signalés phrase par phrase : ils sont normaux à l'unité, suspects en série.",
+    "motifs": [
+      "\\bse tai[st]\\w*\\b", "\\bune phrase\\b", "\\bun mot\\b", "\\bles mots\\b",
       "\\bnommer\\b|\\bnomme[rz]?\\b", "\\breconna[iî]t\\w*\\b", "\\bréparer\\b|\\brépare\\b", "\\beffac\\w+\\b", "\\bdéborde\\w*\\b",
-      "\\bretomb\\w+\\b", "\\bse construi\\w+\\b", "\\bpas tout à fait\\b", "\\bni (?:plus|moins)\\b", "\\bsans un mot\\b"
+      "\\bretomb\\w+\\b", "\\bse construi\\w+\\b"
     ]
   },
   "contrastes": {

@@ -66,7 +66,7 @@ Appliquer `references/matiere.md` :
 
 Ne **jamais inventer** de source, d'étude, de chiffre ou d'anecdote présentée comme réelle. Ce qui manque est demandé à l'utilisateur ou marqué `[À FOURNIR : …]`.
 
-**Porte 2** : chaque élément retenu répond à la question « pourquoi celui-ci et pas le plus probable ? ».
+**Porte 2** : chaque élément retenu répond à la question « pourquoi celui-ci et pas le plus probable ? ». Budget : **3 à 5 choix** de 4 options classées, sans chiffrer de probabilités.
 
 ### Étape 3 : Plan → dans `atelier/fiche.md`
 - Ordre de révélation de l'information, rôle de chaque paragraphe ou scène.
@@ -87,12 +87,17 @@ Rédiger en appliquant `references/construction.md`, la grammaire calibrée. Poi
 
 Pour un long format : rédiger et réviser **par unité** (scène ou chapitre), voir `long-format.md`.
 
-**Porte 4** : le brouillon est complet. Ne pas réviser pendant la rédaction.
+**Longueur** : viser **la cible + 10 %** au brouillon. La révision coupe (gloses, accessoires, formules) : lors des tests, tous les brouillons visés à 900 mots sont sortis entre 630 et 850 mots, puis ont encore raccourci. Il manque presque toujours de la **matière** (une réplique, un exemple, un geste, une étape du raisonnement), jamais des mots de liaison.
+
+**Porte 4** : le brouillon est complet et sa longueur est comprise entre la cible et la cible + 15 % (`wc -w`). Sinon, compléter par de la matière avant de passer à l'étape 5. On ne révise pas le style pendant la rédaction.
 
 ### Étape 5 : Diagnostic → `atelier/rapport-1.md`
-Lancer `diagnostic.py` sur le brouillon avec le genre de profil. Lire :
-- les priorités (✗ et ⚠, triées par pouvoir discriminant) ;
-- les phrases signalées (codes V1 à R1).
+Lancer `diagnostic.py atelier/brouillon.md --genre <genre> --cible <mots>`. Lire :
+- les priorités : ✗ et ⚠, mesures **primaires** d'abord, les **secondaires** ensuite ;
+- les phrases signalées (codes V1 à R1) ;
+- la ligne **PORTE 6**, calculée automatiquement.
+
+Un signalement n'est pas une interdiction. Une phrase signalée L1 ou L2 dont la formule ou le nombre est **nécessaire** (l'âge dont parle le texte, le samedi dont dépend l'intrigue) se garde. Ce qui compte, c'est la densité.
 
 **Porte 5** : le rapport est enregistré. Si le texte fait moins de 300 mots, s'appuyer surtout sur les phrases signalées.
 
@@ -106,14 +111,22 @@ Ordre obligatoire, du plus haut niveau au plus bas. Chaque passe a ses règles d
 Règles de révision :
 - modifications **locales** : on réécrit la phrase ou le paragraphe, jamais tout le texte d'un bloc ;
 - le sens et les faits ne bougent pas ;
-- toute modification qui rend la phrase moins claire ou moins juste est annulée.
+- toute modification qui rend la phrase moins claire ou moins juste est annulée ;
+- **piège n° 1** : fusionner les phrases et retirer les virgules allonge les phrases au-delà de la zone humaine. Surveiller le plafond de longueur moyenne (⚠) à chaque passe ;
+- les mesures **secondaires** (adjectifs, prépositions, coordination, subordination, participes, adverbes, liaisons) ne se corrigent que par la construction, jamais par ajout décoratif. Un écart résiduel y est acceptable.
 
-**Porte 6** : relancer `diagnostic.py atelier/v2.md --avant atelier/brouillon.md`. Conditions pour passer :
-- **au plus 3 mesures ✗** (les extraits humains de calibration en ont 0 à 3 dans 75 % des cas, les textes IA bruts 5 à 19) ;
-- **au plus 2 ⚠** (sur-correction) ;
-- **au plus 45 % de phrases narratives signalées** (50 % en `explicatif`).
+**Porte 6** : relancer `diagnostic.py atelier/v2.md --genre <genre> --avant atelier/brouillon.md --cible <mots>`. Le script affiche **PORTE 6 : FRANCHIE / NON FRANCHIE**. Conditions :
+- **au plus 2 ✗ sur les mesures primaires**, et **au plus 4 ✗ au total** ;
+- **au plus 1 ⚠ de sur-correction de pipeline** (phrases trop longues, trop peu de virgules, liaisons plaquées) ;
+- **au plus 45 % de phrases narratives signalées** (50 % en `explicatif`) ;
+- **longueur à ±10 %** de la cible.
 
-Sinon, une seule passe supplémentaire, ciblée sur les ✗ restants (v3). Au-delà, accepter le résultat et noter les écarts restants : forcer davantage dégrade la prose.
+Calibration de cette porte sur des textes jamais vus :
+- extraits humains tenus à l'écart : 69 % la franchissent en fiction, 73 % en explicatif, 4 sur 9 en pratique ;
+- textes Claude bruts : **0 sur 74** ;
+- textes Claude passés par ce pipeline lors des tests : **8 sur 8**.
+
+Si la porte n'est pas franchie, une seule passe supplémentaire ciblée (v3). Au-delà, accepter le résultat et noter les écarts restants : forcer davantage dégrade la prose.
 
 ### Étape 7 : Jugement adverse → `atelier/jugement.md`
 Appliquer `references/jugement.md`. Il se fait en trois lectures, et non en une relecture complaisante.
@@ -121,11 +134,12 @@ Appliquer `references/jugement.md`. Il se fait en trois lectures, et non en une 
 2. **Lecture de l'éditeur.** Vérifier le sens, la clarté, la cohérence de la voix contre la fiche, l'absence de dégradation et l'absence de faute inventée.
 3. **Lecture à voix haute** (mentale) : rythme, souffle, phrases trop longues pour être lues d'une traite sans ponctuation.
 
-**Porte 7** : les 5 phrases suspectes sont corrigées ou justifiées, et la grille de l'éditeur est toute verte. Relancer le diagnostic si plus de 10 % du texte a changé.
+**Porte 7** : les 5 phrases suspectes sont corrigées ou justifiées, et la grille de l'éditeur est toute verte. Le **diagnostic final** (`final.md --avant v2.md --cible N`) confirme la porte 6. Si le jugement l'a fait régresser, défaire les retouches fautives (souvent des phrases recoupées en deux moyennes). Budget : 3 diagnostics par texte, 4 avec une v3.
 
 ### Étape 8 : Finition et livraison
 - **Typographie** : française d'édition (« » avec espaces insécables, apostrophe ’, points de suspension …, tirets de dialogue —) si le texte est destiné à l'édition (`scripts/typo_fr.py`). Sinon, conserver la typographie demandée.
 - **Livraison** : le texte seul. Ne jamais livrer `atelier/`, les rapports ni les commentaires sur la méthode, sauf si l'utilisateur le demande.
+- **Une seule exception** : si le texte cite des sources de mémoire (auteurs, ouvrages, dates), ajouter **hors du texte** une ligne qui les liste comme « à vérifier avant publication ». Le skill ne permet pas de vérifier une référence.
 
 ## Mode révision ou humanisation d'un texte existant
 1. Étape 0, puis fiche réduite (voix déduite du texte, intention, ce qui doit rester).
@@ -135,7 +149,18 @@ Appliquer `references/jugement.md`. Il se fait en trois lectures, et non en une 
    - « décorer » par synonymes : on restructure les phrases, on ne remplace pas les mots un par un.
 
 ## Coût et dosage
-- **Texte court** (moins de 1 500 mots) : pipeline complet, deux diagnostics.
+Le pipeline complet coûte plusieurs fois le volume du texte en tokens. Ordres de grandeur mesurés sur 900 mots : fiche, matière, 1 à 2 versions, 3 diagnostics, jugement.
+
+**Mode léger**, pour les textes de moins de 600 mots, les messages et les demandes explicitement rapides :
+- fiche en 5 lignes ;
+- 2 ou 3 choix de matière ;
+- rédaction suivant `construction.md` ;
+- **un** diagnostic suivi d'une révision unique qui couvre les quatre passes ;
+- lecture du détecteur seule (5 phrases suspectes et macro-tics).
+
+À dose égale, c'est la rédaction suivant `construction.md` qui rapporte le plus : lors des tests, les brouillons qui l'appliquaient avaient déjà 2 à 4 fois moins de mesures côté IA que les textes bruts, avant toute révision.
+
+- **Texte court** (moins de 1 500 mots) : pipeline complet, trois diagnostics.
 - **Texte moyen** (1 500 à 4 000 mots) : idem, révision par blocs de 5 à 10 paragraphes.
 - **Livre** : voir `long-format.md`.
   - Fiche et matière une fois par chapitre ; la bible de voix une fois pour tout le livre.

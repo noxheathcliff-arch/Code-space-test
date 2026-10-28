@@ -59,13 +59,15 @@ Chaque case cochée est corrigée, ou justifiée par une ligne dans `jugement.md
 ## Lecture 3 : la voix haute (mentale)
 
 Lire chaque paragraphe comme à voix haute et marquer :
-- les endroits où l'on manque de souffle : phrase trop longue sans appui, la recouper ;
+- les endroits où l'on manque de souffle : phrase trop longue sans appui. La recouper en **une longue et une courte**, jamais en deux moyennes (cela crée de la monotonie et fait ressortir l'écart-type en ✗) ;
 - les endroits où l'on bute : construction lourde, la simplifier ;
-- les endroits où le rythme devient mécanique : trois phrases de même allure, en refondre une.
+- les endroits où le rythme devient mécanique : trois phrases de même allure, en refondre une ;
+- les **nouveaux tics créés par la révision** : la même liaison répétée, le même verbe d'incise, des points de suspension en fin de chaque paragraphe, des adjectifs greffés.
 
 ## Porte 7
 
 - Les 5 phrases suspectes sont traitées.
 - Toutes les cases de macro-tics sont décochées ou justifiées.
 - La grille de l'éditeur est entièrement à « oui ».
-- Si plus de 10 % du texte a changé depuis le dernier diagnostic, relancer `diagnostic.py --avant` et vérifier que la porte 6 tient toujours.
+- **Diagnostic final obligatoire** (`diagnostic.py final.md --avant v2.md --cible N`) : la porte 6 doit tenir. Si le jugement l'a fait régresser, revenir sur les retouches du jugement qui l'ont cassée (en général des recoupes en phrases moyennes), pas sur la v2 entière.
+- Budget : au plus **trois diagnostics** par texte (brouillon, v2, final), quatre si une v3 a été nécessaire. Au-delà, on tourne en rond : accepter l'écart et le noter.

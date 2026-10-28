@@ -41,7 +41,7 @@ def charger_nlp():
 def charger_marqueurs():
     m = json.load(open(os.path.join(REF, 'marqueurs.json')))
     comp = {}
-    for cat in ('accessoires', 'formules', 'contrastes', 'ressources_humaines'):
+    for cat in ('accessoires', 'formules', 'mots_surveilles', 'contrastes', 'ressources_humaines'):
         comp[cat] = [re.compile(p, re.I) for p in m[cat]['motifs']]
     return comp
 
@@ -84,21 +84,35 @@ class Phrase:
 
 
 def segmenter(texte, nlp=None):
-    """Découpe en phrases en conservant les paragraphes. Renvoie (phrases, paragraphes)."""
+    """Découpe en phrases (par règles : ponctuation forte suivie d'une majuscule, d'un tiret ou d'un guillemet),
+    en conservant les paragraphes ; spaCy ne sert qu'à l'étiquetage. Renvoie (phrases, paragraphes)."""
     paras = paragraphes(texte)
+    brut = []
+    for i, p in enumerate(paras):
+        dial = bool(DIAL.match(p))
+        for j, s in enumerate(_decouper_regex(p)):
+            brut.append((s, i, j, dial))
+    if nlp is None:
+        return [Phrase(s, i, j, d) for s, i, j, d in brut], paras
     phrases = []
-    if nlp is not None:
-        for i, doc in enumerate(nlp.pipe(paras, batch_size=64)):
-            dial = bool(DIAL.match(paras[i]))
-            for j, s in enumerate(x for x in doc.sents if any(t.is_alpha for t in x)):
-                toks = [(t.text, t.pos_, str(t.morph)) for t in s if not t.is_space]
-                phrases.append(Phrase(s.text.strip(), i, j, dial, toks))
-    else:
-        for i, p in enumerate(paras):
-            dial = bool(DIAL.match(p))
-            for j, s in enumerate(_decouper_regex(p)):
-                phrases.append(Phrase(s, i, j, dial))
+    for (s, i, j, d), doc in zip(brut, nlp.pipe([b[0] for b in brut], batch_size=128)):
+        toks = [(t.text, t.pos_, str(t.morph)) for t in doc if not t.is_space]
+        phrases.append(Phrase(s, i, j, d, toks))
     return phrases, paras
+
+
+VERBE_PRONOM = re.compile(r"\w+-(?:t-)?(?:la|le|les|lui|leur|y|en|moi|toi|nous|vous|il|elle|ils|elles|on|je|tu|ce)\b", re.I)
+
+
+def est_fragment(p):
+    """Phrase narrative très courte sans verbe (« Rien. », « Le silence. »)."""
+    if p.mots > 5 or p.tokens is None:
+        return False
+    if VERBE_PRONOM.search(p.texte):
+        return False
+    if any(w.lower() in PRONOMS_SUJET for w in MOT.findall(p.texte)):
+        return False
+    return not any(t[1] in ('VERB', 'AUX') for t in p.tokens)
 
 
 def _pk(x, n):
@@ -154,7 +168,10 @@ def mesurer(texte, nlp=None, marqueurs=None):
     m['para_ouvre_courte_pct'] = round(100 * sum(1 for v in elig if v[0] <= 8 and v[0] == min(v)) / max(1, len(elig)), 2)
     m['para_chute_courte_pct'] = round(100 * sum(1 for v in elig if v[-1] <= 8 and v[-1] == min(v)) / max(1, len(elig)), 2)
     for cat in ('accessoires', 'formules', 'contrastes', 'ressources_humaines'):
-        m[cat + '_1000'] = _pk(sum(len(r.findall(bas)) for r in marqueurs[cat]), nmots)
+        n = sum(len(r.findall(bas)) for r in marqueurs[cat])
+        if cat == 'formules':
+            n += sum(len(r.findall(bas)) for r in marqueurs['mots_surveilles'])
+        m[cat + '_1000'] = _pk(n, nmots)
     # incises de dialogue : part des verbes neutres (dire, répondre, demander)
     incises = [a or b for a, b in INCISE.findall(corps)]
     if len(incises) >= 3:
@@ -172,7 +189,7 @@ def mesurer(texte, nlp=None, marqueurs=None):
         m['subordination_phrase'] = round(pos.count('SCONJ') / max(1, len(phrases)), 4)
         m['part_present_1000'] = _pk(sum(1 for t in toks if 'VerbForm=Part' in t[2] and 'Tense=Pres' in t[2]), nmots)
         m['adv_ment_1000'] = _pk(sum(1 for t in toks if t[1] == 'ADV' and t[0].lower().endswith('ment')), nmots)
-        m['fragments_1000'] = _pk(sum(1 for p in narr if p.mots <= 6 and not any(t[1] in ('VERB', 'AUX') for t in p.tokens)), nmots)
+        m['fragments_1000'] = _pk(sum(1 for p in narr if est_fragment(p)), nmots)
     return m, phrases, paras
 
 
@@ -192,8 +209,11 @@ def signaler(phrases, marqueurs=None, nlp_dispo=False, genre='fiction'):
             out.append((i, 'V1', 'virgule avant « et »'))
         if nv >= 4 or (nv >= 3 and p.mots <= 22):
             out.append((i, 'V2', f'{nv} virgules : phrase hachée'))
-        if re.search(r"\w\s?:\s+\S", t) and not re.search(r':\s*$', t):
-            out.append((i, 'P1', 'deux-points de révélation ou d\'annonce'))
+        dp = re.search(r"^(.*?\w)\s?:\s+\S", t)
+        if dp and not re.search(r':\s*$', t):
+            avant = len(MOT.findall(dp.group(1)))
+            if genre == 'fiction' or avant <= 4:
+                out.append((i, 'P1', 'deux-points d\'étiquette (« Résultat : »)' if avant <= 4 else 'deux-points de révélation en narration'))
         if p.mots <= 5:
             prec = phrases[narr_idx[k - 1]] if k > 0 else None
             if p.rang == 0 and not prec is None:
@@ -212,11 +232,12 @@ def signaler(phrases, marqueurs=None, nlp_dispo=False, genre='fiction'):
             out.append((i, 'L3', '« on » générique'))
         for cat, code in (('accessoires', 'L2'), ('formules', 'L1'), ('contrastes', 'S1')):
             trouves = [r.search(bas).group(0) for r in marqueurs[cat] if r.search(bas)]
+            if cat == 'accessoires':
+                trouves = [x for x in trouves if x.strip() != 'deux']  # « deux » seul : trop courant pour un signalement
             if trouves:
                 out.append((i, code, ', '.join(dict.fromkeys(trouves))))
-        if nlp_dispo and p.tokens is not None:
-            if p.mots <= 6 and not any(x[1] in ('VERB', 'AUX') for x in p.tokens):
-                out.append((i, 'S3', 'fragment sans verbe'))
+        if nlp_dispo and est_fragment(p):
+            out.append((i, 'S3', 'fragment sans verbe'))
     # monotonie : 5 phrases narratives de longueurs trop proches
     lg = [phrases[i].mots for i in narr_idx]
     for k in range(len(lg) - 4):

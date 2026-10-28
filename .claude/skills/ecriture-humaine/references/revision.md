@@ -18,11 +18,12 @@ Pour chaque paragraphe :
 | Constat | Décision |
 |---|---|
 | S'ouvre sur une phrase courte (« Il était en avance. ») | Fusionner avec la phrase suivante ou ouvrir par une reprise de ce qui précède. |
-| Se ferme sur une maxime, une antithèse, un bilan, une promesse | Supprimer la dernière phrase. Si le paragraphe tient sans elle, c'est fini. Sinon, finir sur le fait ou le geste qui la précédait. |
+| Se ferme sur une maxime générale, une antithèse, un bilan, une morale, une promesse | Supprimer la dernière phrase. Si le paragraphe tient sans elle, c'est fini. Sinon, finir sur le fait ou le geste qui la précédait. **Exception :** un jugement concret du narrateur sur une personne ou une situation précise (« Un vieux con sur une rive où rien ne mord. ») n'est pas une maxime. C'est un trait humain, on le garde. |
 | Contient une phrase qui explique l'effet ou le sens de ce qui vient d'être montré (« C'est ce silence qui… », « C'était sa façon de… ») | Supprimer. Si l'effet n'est plus perceptible, renforcer le détail ou l'action, pas l'explication. |
 | Récapitule (« En somme », « Autrement dit », « Bref, ») | Supprimer la phrase de récapitulation. |
 | Démonte une idée reçue en ouverture (« On croit que… C'est faux. ») | Ouvrir par un cas ou une scène, et laisser l'idée reçue tomber d'elle-même. |
-| Analogie posée puis expliquée dans la phrase suivante | Garder l'image, supprimer l'explication, ou filer l'image dans le paragraphe suivant. |
+| Analogie posée puis expliquée dans la phrase suivante | Fiction et essai : garder l'image, supprimer l'explication, ou filer l'image dans le paragraphe suivant. Explicatif : une image peut être expliquée **une fois** (c'est le métier de la vulgarisation). Le tic, c'est une analogie par section, systématiquement suivie de son explication. |
+| Non-fiction : phrase de conclusion de paragraphe | Une phrase qui conclut une étape du raisonnement est légitime. Ce qui trahit l'IA, c'est la maxime générale ou l'antithèse en chute **à chaque** paragraphe. En garder au plus une sur trois paragraphes, sous forme de conséquence concrète plutôt que de formule. |
 | Blocs de même longueur, structure en 3 parties égales, intertitres en concepts parallèles | Fusionner deux blocs, couper un autre. Renommer les intertitres par un impératif, un infinitif ou un libellé concret, ou les supprimer. |
 | Fin de texte par injonction (« Essayez cette semaine »), morale ou geste d'apaisement | Finir sur une scène ouverte, une question, une annonce de la suite ou un conseil concret non conclusif. |
 
@@ -64,7 +65,9 @@ Si la longueur moyenne, les prépositions, la coordination ou la subordination s
 
 Si le **% de phrases ≥ 30 mots** est trop bas (non-fiction) : construire 1 ou 2 phrases longues par section à partir d'un raisonnement (cause, condition, concession), sans empiler de virgules.
 
-Si un **⚠ sur-correction** apparaît (phrases trop longues, trop de liaisons) : recouper là où la phrase perd le lecteur.
+Si un **⚠ sur-correction** apparaît (phrases trop longues, trop de liaisons) : recouper là où la phrase perd le lecteur. **Comment recouper** : une phrase de 35 mots se coupe en une longue (20 à 25) et une courte ou moyenne (6 à 12), pas en deux moyennes de 17. Deux moyennes créent de la monotonie (R1) et font chuter l'écart-type.
+
+**Ordre des fusions.** Fusionner d'abord les rafales de phrases courtes (C2) et les suites « Il… Il… Il… » (O2). Vérifier ensuite la longueur moyenne avant de traiter les virgules (V2). Supprimer des virgules dans une phrase déjà longue l'alourdit encore.
 
 ## R-RYTH : rythme (passe 2)
 
@@ -98,9 +101,11 @@ Si un **⚠ sur-correction** apparaît (phrases trop longues, trop de liaisons) 
 
 **S1 : contraste correctif.** « Ce n'est pas un caprice, c'est une tempête » → « Ce qui ressemble à un caprice est une tempête. » Mieux encore : décrire la tempête et laisser tomber le caprice. Au plus un contraste par texte.
 
-**Adjectifs trop rares** : ajouter des évaluatifs *avant* le nom là où la voix juge. Ajouter des descriptifs là où la perception est floue. Jamais deux adjectifs décoratifs sur un même nom.
+**Adjectifs trop rares** (mesure secondaire) : là où la voix juge, ajouter un évaluatif *avant* le nom ; là où la perception est floue, un descriptif. Il vaut mieux remplacer un nom générique par un nom qualifié (« la voiture » → « sa vieille Clio ») que greffer un adjectif. Jamais deux adjectifs décoratifs sur un même nom. Si l'ajout sonne décoratif, accepter l'écart.
 
-**Adverbes en -ment trop rares** : en réintroduire là où ils portent une modalité de jugement (« malheureusement », « évidemment ») ou de manière (« lentement »).
+**Adverbes en -ment trop rares** (secondaire) : en réintroduire seulement là où ils portent une modalité de jugement (« malheureusement », « évidemment ») ou de manière (« lentement »).
+
+**Coordination trop basse** (secondaire) : elle remonte quand on remplace des virgules d'enchaînement par « et », « ou », « mais », « car » (§A2 de `construction.md`), pas quand on ajoute des triades.
 
 ## R-VOIX : voix (passe 3)
 
@@ -108,7 +113,7 @@ Si un **⚠ sur-correction** apparaît (phrases trop longues, trop de liaisons) 
 
 ## R-LIAIS : liaisons (passe 3)
 
-Trop bas : transformer 3 à 6 juxtapositions en liaisons explicites (« lorsque », « afin de », « ainsi », « alors que », « bien que », « à nouveau », « grâce à »…) en variant. Ne jamais en mettre deux dans la même phrase. Trop haut (⚠) : en retirer.
+Trop bas (mesure secondaire) : repérer 2 à 4 endroits où deux phrases juxtaposées ont un **lien logique réel** (cause, condition, concession, temps) et l'expliciter (« lorsque », « afin de », « ainsi », « alors que », « bien que », « à nouveau », « grâce à »…). On ne met jamais la même liaison deux fois en 300 mots, ni deux liaisons dans une phrase. Sans lien logique réel, pas de liaison. Trop haut (⚠) : en retirer.
 
 ## R-EXPR : expressivité (passe 4)
 
