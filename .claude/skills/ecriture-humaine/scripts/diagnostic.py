@@ -60,7 +60,8 @@ SECONDAIRES = {'adj_par_nom', 'prepositions_pct', 'coordination_pct', 'subordina
 # Sur-corrections typiques du pipeline (phrases allongées par les fusions, virgules trop rabotées, liaisons plaquées) :
 # seules celles-ci comptent à la porte 6 ; les autres ⚠ relèvent de la variance humaine normale et sont indicatives.
 SURCORR_PORTE = {'phr_moy', 'phr_longues_pct', 'virgules_1000', 'ressources_humaines_1000'}
-PORTE = {'primaires_max': 2, 'total_max': 4, 'surcorrection_max': 1, 'signalees_max': 45, 'signalees_max_explicatif': 50}
+PORTE = {'primaires_max': 2, 'total_max': 4, 'surcorrection_max': 1, 'signalees_max': 45, 'signalees_max_explicatif': 50,
+         'humanite_min': 78, 'fenetres_ia_max': 25}
 
 
 def verdict(val, e, cle=None):
@@ -81,7 +82,28 @@ def verdict(val, e, cle=None):
         return '✓'
 
 
-def porte6(prio, flags, phrases, genre, mots, cible=None):
+def points_texte(phrases):
+    """Indice d'humanité et % de fenêtres au-dessus du seuil, selon le modèle de points (None si indisponible)."""
+    try:
+        import points
+        mod = points.charger_modele()
+    except Exception:
+        return None
+    if not phrases or phrases[0].tokens is None:
+        return None
+    mq = stylo.charger_marqueurs()
+    traits = [points.traits_phrase(p, mq) for p in phrases]
+    res = []
+    for idx in points.fenetres(phrases):
+        v, mots = points.vecteur(idx, phrases, traits)
+        res.append((points.proba(v, mod), mots))
+    tot = sum(m for _, m in res) or 1
+    p_moy = sum(p * m for p, m in res) / tot
+    part = 100 * sum(1 for p, _ in res if p >= mod.get('seuil_fenetre', 0.5)) / max(1, len(res))
+    return points.humanite(p_moy), part
+
+
+def porte6(prio, flags, phrases, genre, mots, cible=None, pts='calcul'):
     """Évalue la porte 6. Renvoie (franchie, lignes de détail)."""
     prim = sum(1 for x in prio if x[0] == '✗' and x[-1] not in SECONDAIRES)
     tot = sum(1 for x in prio if x[0] == '✗')
@@ -93,6 +115,11 @@ def porte6(prio, flags, phrases, genre, mots, cible=None):
              (f'✗ au total {tot} ≤ {PORTE["total_max"]}', tot <= PORTE['total_max']),
              (f'⚠ sur-corrections de pipeline {sur} ≤ {PORTE["surcorrection_max"]}', sur <= PORTE['surcorrection_max']),
              (f'phrases signalées {sig:.0f} % ≤ {lim} %', sig <= lim)]
+    if pts == 'calcul':
+        pts = points_texte(phrases)
+    if pts:
+        conds.append((f'indice d\'humanité (points) {pts[0]} ≥ {PORTE["humanite_min"]}', pts[0] >= PORTE['humanite_min']))
+        conds.append((f'fenêtres IA {pts[1]:.0f} % ≤ {PORTE["fenetres_ia_max"]} %', pts[1] <= PORTE['fenetres_ia_max']))
     if cible:
         ecart = 100 * (mots - cible) / cible
         conds.append((f'longueur {mots} mots, écart {ecart:+.0f} % (tolérance ±10 %)', abs(ecart) <= 10))

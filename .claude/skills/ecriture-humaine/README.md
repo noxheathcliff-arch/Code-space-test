@@ -28,6 +28,14 @@ python3 scripts/diagnostic.py --dossier chapitres/ --genre fiction   # livre : t
 python3 scripts/lot.py --genre fiction --groupe A dirA/ --groupe B dirB/
 python3 scripts/construire_profil.py --genre ma_voix --humain mes_textes/ [--ia textes_ia/]
 python3 scripts/typo_fr.py texte.md sortie.md                        # typographie d'édition
+python3 scripts/points.py texte.md                                   # indice d'humanité, choix qui coûtent
+python3 scripts/points.py --variantes variantes.md                   # classe des variantes séparées par ---
+python3 scripts/points.py --mot regarder considérer                  # points d'un mot
+```
+
+Réentraîner le modèle de points sur vos propres textes (nécessite `pip install scikit-learn`) :
+```
+python3 scripts/entrainer_modele.py --humain fiction:mes_romans/ --ia "fiction:textes_ia/*.txt" [--humain …] [--ia …]
 ```
 
 ## Adapter à une voix ou à un genre

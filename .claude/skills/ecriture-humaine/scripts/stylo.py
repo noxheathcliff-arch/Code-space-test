@@ -75,7 +75,7 @@ class Phrase:
         self.para = para
         self.rang = rang
         self.dialogue = dialogue
-        self.tokens = tokens  # liste de (texte, pos, morph) si spaCy
+        self.tokens = tokens  # liste de (texte, pos, morph, lemme) si spaCy
         mots = MOT.findall(texte)
         self.mots = len(mots)
         self.premier = mots[0].lower() if mots else ''
@@ -96,7 +96,7 @@ def segmenter(texte, nlp=None):
         return [Phrase(s, i, j, d) for s, i, j, d in brut], paras
     phrases = []
     for (s, i, j, d), doc in zip(brut, nlp.pipe([b[0] for b in brut], batch_size=128)):
-        toks = [(t.text, t.pos_, str(t.morph)) for t in doc if not t.is_space]
+        toks = [(t.text, t.pos_, str(t.morph), t.lemma_.lower()) for t in doc if not t.is_space]
         phrases.append(Phrase(s, i, j, d, toks))
     return phrases, paras
 

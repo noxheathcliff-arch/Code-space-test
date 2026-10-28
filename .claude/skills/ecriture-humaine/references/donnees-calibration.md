@@ -53,6 +53,47 @@ Les textes intégraux ne sont **pas** inclus dans le skill (droits d'auteur). Se
 - **Textes IA bruts** : 5 à 19 mesures ✗ (médiane 11 à 15). Aucun ne franchit la porte.
 - La porte est donc exigeante sans être hors d'atteinte : environ 2 textes humains sur 3 la passent du premier coup. Le pipeline prévoit une passe supplémentaire, puis l'acceptation des écarts restants.
 
+## Modèle de points (`modele_points.json`)
+
+**Construction**
+- Régression logistique L2 sur des fenêtres d'environ 45 mots : 3 011 fenêtres humaines et 2 599 fenêtres IA pour la validation, davantage pour le modèle final.
+- Traits retenus :
+  - trigrammes de constructions (catégorie grammaticale ou mot-outil, avec la ponctuation et les bords de phrase) ;
+  - mots-outils ;
+  - mots de contenu, **seulement si leur biais va dans le même sens dans tous les genres où ils apparaissent**, ce qui écarte les mots liés au sujet d'un livre ;
+  - forme des phrases ;
+  - les quatre catégories de marqueurs.
+- 18 mots trop liés aux sujets des livres ont été retirés à la main (voir `retires_manuellement`).
+
+**Validation croisée groupée** (une consigne IA ou un bloc de 8 extraits voisins d'un livre ne sont jamais à la fois en entraînement et en test) : AUC de **0,976** par fenêtre.
+
+**Test sur des textes jamais vus** (modèle entraîné sur 70 % des extraits humains) :
+
+| Groupe | Indice d'humanité médian | Plage |
+|---|---|---|
+| Extraits humains tenus à l'écart (60) | **91** | p10 78, minimum 66 |
+| Claude brut, nouvelles consignes (8) | **10** | 7 à 13 |
+| Claude avec la v1 du skill, sans la passe par points (8) | **72** | 30 à 84 |
+
+Le modèle n'a jamais servi à produire ces textes v1 : c'est une mesure indépendante.
+
+## Test à l'aveugle (juges LLM)
+
+Deux juges Claude Haiku indépendants ont reçu 36 extraits anonymisés de ~380 mots, mélangés, typographie uniformisée :
+- 20 extraits humains tenus à l'écart ;
+- 8 textes Claude bruts ;
+- 8 textes Claude avec la v1 du skill.
+
+Consigne : « humain ou IA ».
+
+| Groupe | Jugés humains |
+|---|---|
+| Extraits humains | 31 / 40 (78 %) |
+| Claude brut | 5 / 16 (31 %) |
+| Claude avec la v1 du skill | **13 / 16 (81 %)** |
+
+L'échantillon est petit et les juges sont des LLM, qui corrèlent mal avec les experts humains : c'est un signal, pas une preuve.
+
 ## Limites (à garder en tête)
 
 1. **Trois livres, trois auteurs.** Les profils décrivent ces voix-là autant que « l'humain » en général. Romance populaire, développement personnel et vulgarisation traduite ne sont pas la littérature blanche ni la presse. Pour une autre cible, construire un profil (`construire_profil.py`) à partir de 50 000 mots ou plus de textes humains du genre visé.
