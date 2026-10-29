@@ -1,5 +1,27 @@
 # Textes à passer dans Pangram
 
+## Version 2 du skill (9 livres, points de décision, émotion) : dossier `v2/`
+
+| Fichier | Consigne | Mots | Indice d'humanité (modèle v2) | Porte 6 |
+|---|---|---|---|---|
+| `v2/scene-port-avec-skill.md` | Scène, 3e personne, passé : une jeune femme réclame à un vieux capitaine l'argent prêté par son père | 979 | **97** | franchie |
+| `v2/scene-port-sans-skill.md` | même consigne, Claude Opus sans skill (témoin) | 1 078 | 17 | non franchie |
+| `v2/procrastination-avec-skill.md` | Développement personnel : pourquoi nous remettons à plus tard ce qui compte | 801 | **97** | franchie |
+| `v2/procrastination-sans-skill.md` | même consigne, sans skill (témoin) | 837 | 27 | non franchie |
+
+Sources citées dans `procrastination-avec-skill.md`, de mémoire, **à vérifier avant toute publication** :
+- Sirois et Pychyl (2013), *Social and Personality Psychology Compass* ;
+- Wohl, Pychyl et Bennett (2010), *Personality and Individual Differences* ;
+- Pychyl, *Solving the Procrastination Puzzle* (2013).
+
+Le personnage d'Agnès est un cas illustratif annoncé comme tel.
+
+**Ce qui serait le plus utile en retour** : le pourcentage global de chaque fichier, et les passages surlignés « IA » par Pangram s'il y en a. Ces passages permettent de réentraîner le modèle de points sur ce que Pangram voit réellement.
+
+---
+
+## Version 1 (historique)
+
 ## Texte principal (pipeline complet, sélection par points comprise)
 
 | Fichier | Consigne | Mots | Indice d'humanité (points du skill) | Porte 6 |
