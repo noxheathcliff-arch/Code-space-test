@@ -1,3 +1,46 @@
+# Version 2 (9 livres) : à lire en premier
+
+## Corpus
+
+| Genre | Livres humains | Mots | Statut |
+|---|---|---|---|
+| fiction | romance sombre française (Guerrieri) ; *Le Trône de fer* (Martin, trad. J. Sola) ; *L'Épée de la providence* (Sapkowski, trad. du polonais) ; *À quoi rêvent les étoiles* (Fargetton, roman contemporain français) | ≈ 555 000 | 4 voix très différentes |
+| pratique | Giacomello (2021) ; d'Ansembourg, *Cessez d'être gentil, soyez vrai !* (2001) ; Mercier (2020, avant les IA grand public) | ≈ 125 000 | |
+| explicatif | Siegel et Bryson (trad.) ; André et Lelord, *L'Estime de soi* (1999-2007) | ≈ 140 000 | |
+
+- **IA** : 146 textes Claude Haiku, Sonnet et Opus. Ce sont les 114 du premier corpus, 8 textes de test et 24 nouveaux (fantasy, roman contemporain, psychologie, communication).
+- **Profils** : au plus 70 extraits par livre, prélevés à intervalle régulier, pour qu'aucun livre ne domine la norme.
+- **Analyse** : syntaxe complète (spaCy, dépendances) de chaque phrase, mise en cache. Les points de décision, le rythme et l'émotion sont calculés phrase par phrase.
+
+## Ce que la version 2 a changé
+
+1. **La validation « livre tenu à l'écart »** (on entraîne sur 8 livres et on teste sur le 9e, inconnu) donne une **AUC moyenne de 0,937** par passage de 45 mots. Les décisions explicites (ouverture, lien, fin, rythme) n'ajoutent pas de pouvoir prédictif aux trigrammes, qui les captent déjà, mais elles rendent les points **lisibles**. Le livre le plus difficile est Fargetton (AUC 0,84) : phrases courtes au présent, beaucoup de dialogue, c'est le style humain le plus proche de l'IA.
+2. **Les zones de fiction sont plus larges** : la densité de virgules, la longueur des phrases et la part de phrases courtes ne séparent plus nettement les humains de l'IA en fiction. Restent robustes sur les 9 livres : « , et », les accessoires, les liaisons, les incises neutres, les ouvertures par pronom, les fins sur négation, les adjectifs, l'autocorrélation du rythme, la ponctuation finale expressive, la longueur des répliques et, en non-fiction, la reprise du nom-clé.
+3. **Invariants** : 886 traits humains et 752 traits IA gardent le même signe dans tous les modèles « livre tenu à l'écart ». Ce sont les choix partagés par les 9 auteurs (voir `points.md` et `decisions.md`).
+4. **Artefacts neutralisés** : les tirets de dialogue (– ou —) et le guillemet d'ouverture de réplique sont rendus équivalents. Sans cela, le modèle apprenait à distinguer la typographie de l'éditeur, pas l'écriture. 46 mots trop liés aux sujets des livres ont été retirés (roi, cheval, estime, école…).
+5. **Porte 6 recalibrée** : environ 80 % des extraits humains hors profils la franchissent (de 63 % à 100 % selon le livre), contre 0 sur 8 textes Claude bruts.
+6. **Premier retour Pangram** : sur la scène produite avec le pipeline complet, un passage de trois phrases a été évalué à **91 % humain, 9 % IA**.
+
+## Analyses de fabrication (fiction)
+
+Médianes par extrait de 900 mots, humains et IA. Le détail est dans `emotion-scene.md` et `decisions.md`.
+
+| Mesure | Humain | IA |
+|---|---|---|
+| Questions dans la narration / 1000 | 1,1 | 0 |
+| Verbes mentaux / 1000 | 8,6 | 13,1 |
+| Noms propres / 1000 | 41,5 | 23,8 |
+| Émotions nommées / 1000 | 4,3 | 2,2 |
+| Mots du corps (phrases) / 1000 | 8,3 | 10,5 |
+| Vue / 1000 | 5,8 | 9,9 |
+| Ouïe / 1000 | 23,5 | 16,5 |
+| Longueur des phrases avant un pic émotionnel | 11,1 | 9,6 |
+| Phrases ≤ 8 mots hors pic | 48 % | 57-63 % |
+
+---
+
+# Version 1 (3 livres) : historique
+
 # Données de calibration : d'où viennent les chiffres
 
 ## Corpus

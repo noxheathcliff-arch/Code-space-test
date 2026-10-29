@@ -6,22 +6,30 @@
 
 | Mesure | Fiction (zone · IA) | Pratique | Explicatif | Essai/article |
 |---|---|---|---|---|
-| Virgules / 1000 mots | **37-58** · 86 | **33-52** · 70 | **47-70** · 78 | **37-69** · 74 |
-| « , et » / 1000 mots | **0-2** · 7 | **0-2** · 5 | 1-7 · 6 | 0-6 · 6 |
-| Deux-points / 1000 | **0-2** · 4 | 1-12 · 9 | **2-11** · 12 | 1-12 · 10 |
-| Longueur moyenne de phrase (**plafond strict**) | **11,5-17** · 11,5 | 13-19,5 · 13 | **15,5-23** · 16 | 13,5-22,5 · 15,5 |
-| % phrases ≥ 30 mots | 0-9 | **1,5-20** · 4,5 | **6-24** · 9 | 3-24 · 6 |
-| % phrases ≤ 5 mots | **3-22** · 28 | 3-23 · 13 | 0-16 · 7 | 2-21 · 9 |
-| « on » / 1000 | **0-4,5** · 6 | **0-4,5** · 8 | **0-4** · 7 | **0-4,5** · 8 |
-| « nous » / 1000 | 0-7 | 0-27 | **3-21** · 0 | **0-22** · 1 |
-| Adjectifs par nom | **0,23-0,35** · 0,20 | 0,3-0,5 · 0,33 | 0,3-0,4 · 0,27 | 0,3-0,5 · 0,28 |
-| Adverbes en -ment / 1000 | **3-12** · 4 | 8-24 · 10 | 5-15 | 7-18 |
-| Participes présents / 1000 | **2-9** · 2 | **2-8** · 2 | 1-6 | 1-7 |
-| Points de suspension / 1000 | **1-10** · 0 | 0-3 | 0-2 | 0-2 |
-| Exclamations / 1000 | 0-13 · 0 | 0-3 | 0-4,5 | 0-4,5 |
-| Liaisons « humaines » / 1000 | **3-12** · 0 | **8-16** · 2 | **4-15** · 1 | 5-15 · 1 |
-| Accessoires / 1000 | **1-6** · 17 | 0-4 | **1-7** · 10 | 0-5,5 · 9 |
-| Incises de dialogue neutres (« dit-il ») | **0-25 %** · 83 % | - | - | - |
+| Virgules / 1000 mots | 47-105 · 85 | 37-79 · 72 | **51-72 · 75** | **41-77 · 74** |
+| « , et » / 1000 mots | **0-6 · 7,8** | **0-4,3 · 5,4** | **1-6,4 · 6,4** | **0-5,4 · 6,2** |
+| Deux-points / 1000 | 0-5,4 · 3,3 | 1,5-12,6 · 9,6 | 2,6-13,9 · 10,9 | 2,2-13,5 · 9,6 |
+| Longueur moyenne de phrase (**plafond strict**) | 9,3-18 · 12 | **15-28 · 14** | 14-24 · 16 | **15-26 · 16** |
+| % phrases ≥ 30 mots | 0-16 · 4,8 | **7-37 · 4,5** | 7,5-27 · 8,7 | **7-35 · 5,8** |
+| % phrases ≤ 5 mots | 4-37 · 27 | 0-17,5 · 13 | 2,4-24 · 7,8 | 0-20 · 10 |
+| Autocorrélation des longueurs (zones de rythme) | −0,18 à +0,30 · −0,14 | −0,20 à +0,25 · −0,08 | −0,13 à +0,38 · −0,12 | −0,16 à +0,32 · −0,10 |
+| % phrases finies par ? ! … | 0-13,6 · 0 | 0-21 · 3 | **2,3-28 · 1,8** | **2,2-25 · 1,9** |
+| « on » / 1000 | **0-5,6 · 6,1** | **0-7,3 · 8,1** | 0-10 · 8,8 | **0-9,2 · 9,1** |
+| « nous » / 1000 | 0-7,8 · 0 | **1,1-43 · 4** | **1,2-18 · 1** | **1,2-37 · 1,3** |
+| Adjectifs par nom | **0,21-0,33 · 0,20** | 0,23-0,45 · 0,33 | **0,28-0,45 · 0,27** | 0,24-0,45 · 0,29 |
+| Adverbes en -ment / 1000 | **4,3-14 · 4,2** | 7,8-22 · 9,7 | 5,7-15 · 9 | 6,3-19,5 · 9 |
+| Participes présents / 1000 | **2,2-14,5 · 2** | 1,4-7,9 · 2,2 | 1,1-6,5 · 2,4 | 1,2-7,4 · 2,4 |
+| Points de suspension / 1000 | **1,1-11 · 0** | 0-4,2 · 0 | 0-8,3 · 0 | 0-6,5 · 0 |
+| Exclamations / 1000 | **0-13 · 0** | 0-7 · 0 | 0-3,4 · 0 | 0-5,5 · 0 |
+| Liaisons « humaines » / 1000 | **2,2-9,2 · 0** | **3,3-14,7 · 2,1** | **3,2-12 · 1,2** | **3,2-14,6 · 1,4** |
+| Accessoires / 1000 | **1,1-11,6 · 16,7** | 0-7,5 · 3,9 | 1-9,6 · 9,3 | 0-8,8 · 8,8 |
+| % phrases ouvertes par un pronom sujet | **7,5-35 · 40** | 7-37,5 · 24 | 5-22 · 18,5 | 5,6-33 · 22,5 |
+| % phrases finies sur une négation | **0-4,8 · 5,4** | 0-7,1 · 2,4 | 0-3,6 · 0 | 0-5,3 · 2 |
+| Noms propres / 1000 | 12-62 · 23,5 | 1,7-13 · 2,2 | 3,7-24 · 9 | 2,2-20 · 5,8 |
+| Mots par phrase de réplique | **5,6-13,2 · 5,9** | 11-24 · 12,9 | 7,2-24 · 11,5 | 8,9-24 · 11,7 |
+| Incises de dialogue neutres (« dit-il ») | **0-60 % · 80 %** | - | - | - |
+
+Zones calculées sur 9 livres (≈ 820 000 mots, au plus 70 extraits de 900 mots par livre pour qu'aucun ne domine). Avec quatre romanciers très différents (une romance française, Martin et Sapkowski traduits, un roman jeunesse contemporain), les zones de fiction sont **larges** : la diversité est un trait humain. Ce qui reste étroit et discriminant malgré cette diversité est en gras.
 
 En gras : les écarts les plus discriminants pour le genre.
 
@@ -31,7 +39,7 @@ En gras : les écarts les plus discriminants pour le genre.
 
 ## A. Ponctuation
 
-**A1. Virgules : diviser par deux le réflexe.** La virgule est le premier marqueur IA (δ = +0,86 à +1,00 dans tous les genres). D'où viennent les virgules en trop, et ce qu'il faut faire à la place :
+**A1. Virgules : viser les mauvaises, pas toutes.** Sur 3 livres, la densité de virgules séparait parfaitement l'humain de l'IA. Sur 9 livres, ce n'est plus vrai en fiction : Martin et Sapkowski traduits en mettent autant que Claude, dans des phrases longues. Ce qui reste discriminant partout, c'est **le type** de virgule : « , et » (le marqueur le plus stable du corpus), les énumérations de groupes nominaux, les appositions en cascade, la virgule de rajout (« …, dans la cuisine »). Dans la non-fiction, la densité reste trop élevée chez l'IA. Ce qu'il faut faire à la place :
 - **Énumérations de groupes nominaux** (« la tasse, le journal plié, les clés ») → un seul nom qui résume et un détail qui compte.
 - **Appositions en cascade** (« Marc, son frère, l'aîné, celui qui… ») → une relative ou un complément du nom.
 - **Incises de circonstance** (« Dans la cuisine, sur la table, il y avait… ») → les intégrer sans virgule (« Il y avait sur la table de la cuisine… »).
@@ -56,9 +64,9 @@ Si les sujets diffèrent et que la phrase est longue, préférer une subordinati
 ## B. Construction de la phrase
 
 **B1. Longueur.** Plus long que le réflexe IA, sans tomber dans le pavé :
-- fiction : 13 à 16 mots en moyenne, **jamais plus de 17** ;
-- pratique : 15 à 18 ;
-- explicatif et essai : 17 à 21.
+- fiction : 11 à 16 mots en moyenne, **jamais plus de 18** (zone humaine 9-18 ; l'IA est à 12, mais ses phrases sont hachées autrement) ;
+- pratique : 16 à 24 (zone 15-28 ; l'IA est à 14 : **trop court**) ;
+- explicatif et essai : 16 à 22 (zone 14-26).
 
 En non-fiction, 5 à 20 % des phrases dépassent 30 mots. Elles se construisent par **expansion interne**, pas par empilement de virgules. La longueur vient de quelques phrases longues bien construites, à côté de phrases moyennes et de rares courtes, et non d'un allongement uniforme de toutes les phrases.
 
@@ -89,7 +97,8 @@ Règles : jamais trois phrases de suite ouvertes par un pronom sujet ; jamais de
 
 - **Phrases très courtes** (5 mots ou moins) : en fiction, l'IA en fait 29 % contre 14 % chez l'humain. Elles sont autorisées dans les répliques, pour un vrai pic d'action, ou pour un verdict du narrateur. Hors dialogue : au plus une par paragraphe, jamais en ouverture de paragraphe, jamais deux de suite.
 - **Fragments sans verbe** (« Rien. Le silence. ») : au plus une cascade par scène, et seulement si la voix est déjà installée.
-- La variation naît de la *construction* (une longue phrase subordonnée suivie d'une moyenne), pas de l'alternance mécanique long/court.
+- **Zones de rythme, pas alternance** (`decisions.md` §5). L'IA alterne mécaniquement court et long : l'autocorrélation de ses longueurs successives est négative. Chez l'humain, elle est positive : des séries de phrases courtes quand ça presse, des séries de longues quand on pense. La transition courte→longue coûte +0,82 point ; courte→courte rapporte −0,50.
+- La variation naît de la *construction* et du *moment de la scène*, pas d'une règle d'alternance.
 
 ## E. Paragraphes
 

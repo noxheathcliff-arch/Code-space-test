@@ -53,7 +53,7 @@ def echantillons(sources, label, nlp, mq):
     res = []
     for ti, (genre, grp, texte) in enumerate(sources):
         phrases, _ = stylo.segmenter(texte, nlp)
-        traits = [points.traits_phrase(p, mq) for p in phrases]
+        traits = points.traits_texte(phrases, mq)
         for idx in points.fenetres(phrases):
             v, mots = points.vecteur(idx, phrases, traits)
             res.append({'v': v, 'y': label, 'genre': genre, 'groupe': grp, 'texte': f'{label}:{ti}', 'mots': mots,

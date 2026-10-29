@@ -8,8 +8,8 @@ description: Pipeline strict d'écriture et de révision en français pour produ
 Ce skill impose une **procédure**, pas une liste d'astuces. Chaque étape produit un livrable écrit et se termine par une **porte** : on ne passe pas à l'étape suivante tant que la porte n'est pas franchie.
 
 Les règles chiffrées et les points viennent d'une calibration :
-- **corpus** : trois livres humains (≈ 190 000 mots) et 114 textes générés par Claude dans les mêmes genres ;
-- **validation** : sur des textes jamais vus (voir `references/donnees-calibration.md`).
+- **corpus** : 9 livres humains (≈ 820 000 mots : 4 romans, 3 livres pratiques, 2 de vulgarisation) et 146 textes générés par Claude dans les mêmes genres ;
+- **validation** : livre entier tenu à l'écart et textes jamais vus (voir `references/donnees-calibration.md`).
 
 ## Ce qu'il faut savoir avant de commencer
 
@@ -20,7 +20,10 @@ Les règles chiffrées et les points viennent d'une calibration :
    - plus de phrases très courtes ;
    - moins d'adjectifs, de possessifs, de prépositions et de subordination ;
    - presque aucune liaison classique (« lorsque », « afin de », « ainsi ») ;
-   - un concret simulé par des **accessoires** (nombres en lettres, jours, horaires, cuisine, café, téléphone) : ×3 à ×9.
+   - un concret simulé par des **accessoires** (nombres en lettres, jours, horaires, cuisine, café, téléphone) : ×3 à ×9 ;
+   - un **rythme par alternance** court/long (autocorrélation négative), là où l'humain écrit par zones ;
+   - 44 % de phrases de fiction ouvertes par un pronom sujet (humain 25 %), trois fois plus de fins sur une négation (« …ne répondit pas. »), 98 % de points finaux ;
+   - moins d'émotions **nommées** que les romanciers (2,2 contre 4,3 pour 1000 mots) : l'IA sur-applique « montrer plutôt que dire ».
 2. **Chaque choix a un prix.** `references/points.md` donne les points IA (+) ou humains (−) de chaque construction, mot-outil et mot. `scripts/points.py` calcule ceux du texte et classe les variantes d'une phrase.
 3. **Humain ne veut pas dire négligé.** On ne fabrique jamais de fautes, de coquilles ni de désordre artificiel. On vise la *maîtrise* d'un auteur, avec ses choix assumés : phrases longues bien construites, ponctuation expressive, registre propre, jugements, images filées.
 4. **Les outils signalent et classent, ils ne décident pas.** Entre deux variantes, on prend la moins « IA » **parmi celles qui gardent le sens, la voix et la clarté**. Viser 100 partout produit un autre automatisme.
@@ -55,8 +58,9 @@ Déterminer :
 - le **mode** : texte neuf, révision ou humanisation, long format (plus de 4 000 mots) ;
 - le **genre de profil** et la **longueur cible** ;
 - les références à charger :
-  - `genres/fiction.md` (contient le dialogue) ;
+  - `genres/fiction.md` (contient le dialogue) et `emotion-scene.md` ;
   - ou `genres/non-fiction.md` ;
+  - ou `genres/conversation.md` pour un message, une réponse courte, une explication rapide (mode conversation : pas de pipeline lourd) ;
   - plus `genres/long-format.md` si le texte est long.
 
 **Porte 0** : ces décisions sont écrites en tête de `atelier/fiche.md`.
@@ -84,7 +88,7 @@ Fiche de `references/cadrage.md` :
 **Porte 2** : chaque élément retenu répond à « pourquoi celui-ci et pas le plus probable ? ».
 
 ### Étape 3 : Lecture de la grille de choix
-Lire `references/construction.md` et `references/points.md` **avant d'écrire la première phrase**. Les retenir sous forme de réflexes :
+Lire `references/decisions.md`, `references/construction.md` et `references/points.md` **avant d'écrire la première phrase**. En fiction, planifier aussi l'arc émotionnel de la scène selon `emotion-scene.md` (montée calme, pic contracté, retour au calme). Les retenir sous forme de réflexes :
 - possessif plutôt qu'article ;
 - verbes coordonnés par « et » sans virgule ;
 - pas de deux-points de révélation ;
@@ -93,7 +97,10 @@ Lire `references/construction.md` et `references/points.md` **avant d'écrire la
 - ouverture de phrase par un complément ou une subordonnée ;
 - verbe qui juge plutôt que geste neutre ;
 - aucune phrase qui finit sur « pas. » ;
-- pas de « on » générique.
+- pas de « on » générique ;
+- une phrase de narration sur quatre au plus ouverte par un pronom sujet ; changer d'angle d'une phrase à l'autre ;
+- rythme par zones, jamais d'alternance court→long par réflexe ;
+- nommer les gens et les lieux ; en non-fiction, répéter le nom-clé plutôt que « cela ».
 
 **Porte 3** : écrire dans la fiche les 5 réflexes du barème les plus pertinents pour ce texte.
 
@@ -140,19 +147,20 @@ Règles transversales :
 - les mesures **secondaires** (adjectifs, prépositions, coordination, subordination, participes, adverbes, liaisons) se corrigent par la construction, jamais par ajout décoratif.
 
 **Porte 6** : `diagnostic.py atelier/v2.md --genre G --avant atelier/brouillon.md --cible N` affiche **PORTE 6 : FRANCHIE / NON FRANCHIE**. Conditions :
-- au plus 2 ✗ primaires et 4 ✗ au total ;
+- au plus 3 ✗ primaires et 5 ✗ au total ;
 - au plus 1 ⚠ de sur-correction de pipeline ;
-- au plus 45 % de phrases signalées (50 % en explicatif) ;
 - **indice d'humanité (points) ≥ 78** et **au plus 25 % de fenêtres IA** ;
-- longueur à ±10 %.
+- longueur à ±10 % ;
+- le % de phrases signalées est affiché à titre indicatif (repère < 45 %).
 
-Calibration sur des textes jamais vus :
+Calibration (9 livres) :
 
 | | Fiction | Pratique | Explicatif |
 |---|---|---|---|
-| Extraits humains tenus à l'écart | 25 / 36 | 3 / 9 | 9 / 15 |
-| Textes Claude bruts | 0 / 4 | 0 / 2 | 0 / 2 |
+| Extraits humains hors profils | 26 / 32 (Guerrieri 8/8, Martin 7/8, Fargetton 6/8, Sapkowski 5/8) | 5 / 7 | 7 / 8 |
+| Textes Claude bruts (consignes nouvelles) | 0 / 4 | 0 / 2 | 0 / 2 |
 | Première version du skill (sans la passe 5) | 3 / 4 | 0 / 2 | 0 / 2 |
+| Scène livrée pour Pangram (pipeline complet) | 1 / 1 (indice 95 ; Pangram : 91 % humain sur un passage) | | |
 
 Si la porte n'est pas franchie : une passe ciblée (v3), puis accepter et noter les écarts.
 
@@ -193,11 +201,13 @@ Interdits :
 
 - `references/cadrage.md` : fiche et contrat de voix.
 - `references/matiere.md` : choix de matière, anti-accessoires, ancrage.
+- `references/decisions.md` : **points de décision** mesurés (ouvrir, relier, densifier, finir, enchaîner les longueurs, nommer).
+- `references/emotion-scene.md` : **fabrication de l'émotion et des scènes** (arc des pics, émotion nommée et corps, discours indirect libre, sens, dialogue).
 - `references/construction.md` : grammaire calibrée (zones par genre).
 - `references/points.md` : **barème de points** et procédure de sélection des variantes.
 - `references/revision.md` : tables de décision par code et par règle, mode sans script.
 - `references/jugement.md` : lecture adverse, grille de l'éditeur, macro-tics.
-- `references/genres/` : fiction, non-fiction, long format.
+- `references/genres/` : fiction, non-fiction, conversation (textes courts et discussion), long format.
 - `references/donnees-calibration.md` : corpus, méthode, validation, limites.
 - `references/marqueurs.json`, `references/profils.json`, `references/modele_points.json` : données des scripts.
 - `eval/protocole.md` : mesurer l'effet du skill, détecteurs externes compris.

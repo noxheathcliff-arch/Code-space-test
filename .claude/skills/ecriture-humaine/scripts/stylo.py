@@ -10,6 +10,7 @@ REF = os.path.join(os.path.dirname(ICI), 'references')
 DIAL = re.compile(r'^\s*(?:[—–]|-\s|«)')
 MOT = re.compile(r"[A-Za-zÀ-ÖØ-öø-ÿœŒæÆ]+(?:[-'][A-Za-zÀ-ÖØ-öø-ÿœŒæÆ]+)*")
 PRONOMS_SUJET = {'je', 'j', 'tu', 'il', 'elle', 'on', 'nous', 'vous', 'ils', 'elles'}
+MENTAL = set('penser savoir croire demander comprendre imaginer souvenir rappeler ignorer deviner espérer vouloir sembler paraître oublier douter réaliser'.split())
 # incise de dialogue : « …, dit-il », « …, répond Marie », « … ! s'exclame-t-elle »
 INCISE = re.compile(r"[,!?…]\s+(?:s'|se |l'|lui |me |m')?([a-zàâçéèêëîïôûùüÿœ]+?)(?:-t)?-(?:il|elle|je|ils|elles|on|nous|vous)\b"
                     r"|[,!?…]\s+([a-zàâçéèêëîïôûùüÿœ]+(?:a|it|ut|e|ent|ait|aient))\s+[A-ZÀ-Þ][a-zà-ÿ]+\b")
@@ -179,6 +180,29 @@ def mesurer(texte, nlp=None, marqueurs=None):
         m['incises_neutres_pct'] = round(100 * neutres / len(incises), 2)
     else:
         m['incises_neutres_pct'] = None
+    # rythme : autocorrélation des longueurs successives (humain > 0 : « zones » ; IA < 0 : alternance mécanique)
+    if len(longueurs) > 6:
+        mu = st.mean(longueurs)
+        den = sum((x - mu) ** 2 for x in longueurs)
+        m['autocorr_longueurs'] = round(sum((a - mu) * (b - mu) for a, b in zip(longueurs, longueurs[1:])) / den, 3) if den else 0
+    else:
+        m['autocorr_longueurs'] = None
+    fins = [p.texte.rstrip()[-1:] for p in narr if p.texte.rstrip()]
+    m['ponct_finale_expressive_pct'] = round(100 * sum(1 for c in fins if c in '?!…') / max(1, len(fins)), 2)
+    m['narr_questions_1000'] = _pk(sum(1 for c in fins if c == '?'), nmots)
+    rep = [p.mots for p in phrases if p.dialogue]
+    m['mots_par_replique'] = round(st.mean(rep), 2) if len(rep) >= 5 else None
+    if nlp is not None:
+        import points as _pts
+        liens = [_pts.lien(a.tokens, b.tokens) for a, b in zip(narr, narr[1:])]
+        m['lien_meme_sujet_pct'] = round(100 * liens.count('meme_sujet') / max(1, len(liens)), 2)
+        m['lien_reprise_lexicale_pct'] = round(100 * liens.count('reprise_lexicale') / max(1, len(liens)), 2)
+        fm = [_pts.fin(p.tokens)[0] for p in narr]
+        m['fin_negation_pct'] = round(100 * fm.count('negation') / max(1, len(fm)), 2)
+        lems = [t[3] for p in phrases for t in p.tokens]
+        m['emotion_nommee_1000'] = _pk(sum(1 for x in lems if x in _pts.EMO), nmots)
+        m['verbes_mentaux_1000'] = _pk(sum(1 for p in phrases for t in p.tokens if t[1] == 'VERB' and t[3] in MENTAL), nmots)
+        m['noms_propres_1000'] = _pk(sum(1 for p in phrases for t in p.tokens if t[1] == 'PROPN'), nmots)
     if nlp is not None:
         toks = [t for p in phrases for t in p.tokens]
         pos = [t[1] for t in toks if t[1] not in ('PUNCT', 'SPACE')]

@@ -28,6 +28,8 @@ def etiquette(t):
     texte, pos = t[0], t[1]
     bas = texte.lower()
     if pos == 'PUNCT' or pos == 'SYM':
+        if texte in ('–', '—', '―', '-', '−'):
+            return '—'  # tirets de dialogue et d'incise : convention typographique, pas un choix d'écriture
         return texte if texte in PONCT_GARDEES else 'PUNCT'
     if bas in OUTILS:
         return bas
@@ -42,6 +44,8 @@ def traits_phrase(p, mq):
         f[k] = f.get(k, 0.0) + v
     toks = p.tokens or []
     tags = ['<s>'] + [etiquette(t) for t in toks] + ['</s>']
+    if p.dialogue and len(tags) > 1 and tags[1] in ('«', '"'):
+        tags[1] = '—'  # réplique ouverte par un guillemet ou un tiret : même choix d'écriture
     for i in range(len(tags) - 2):
         add('G:' + ' '.join(tags[i:i + 3]))
     for t in toks:
@@ -63,6 +67,125 @@ def traits_phrase(p, mq):
         if n:
             add('C:' + cat, n)
     return f
+
+
+PRON_SUJ = {'je', 'tu', 'il', 'elle', 'on', 'nous', 'vous', 'ils', 'elles', "j'"}
+CONNECT = {'et', 'mais', 'car', 'donc', 'puis', 'alors', 'ainsi', 'pourtant', 'cependant', 'enfin', 'ensuite', 'or',
+           'aussi', 'néanmoins', 'toutefois', 'bref', 'sinon', 'certes'}
+ANAPH = {'il', 'elle', 'ils', 'elles', 'ce', 'cela', 'ça', 'celui', 'celle', 'ceux', 'celles', "c'"}
+EMO = set('''peur crainte terreur effroi angoisse anxiété panique colère rage fureur irritation agacement tristesse chagrin peine
+désespoir mélancolie joie bonheur allégresse plaisir honte culpabilité gêne embarras jalousie envie haine dégoût mépris surprise
+étonnement soulagement espoir amour tendresse fierté solitude nostalgie regret émotion sentiment effrayé terrifié furieux triste
+heureux joyeux honteux coupable jaloux soulagé ému anxieux nervosité nerveux inquiet inquiétude angoissé désespéré fier gêné
+craindre redouter apeuré paniqué exaspéré bouleversé émouvoir effrayer terrifier'''.split())
+CORPS = set('''cœur poitrine gorge souffle respiration respirer ventre estomac main doigt jambe genou peau frisson frissonner trembler
+tremblement sueur transpirer larme pleurer joue rougir pâlir nausée vertige mâchoire poing serrer cogner nœud glacer brûler lèvre
+paupière nuque épaule dos tempe pouls sang tripes haleter suffoquer'''.split())
+
+
+def _premier(toks):
+    i = 0
+    while i < len(toks) and toks[i][1] in ('PUNCT', 'SPACE', 'SYM'):
+        i += 1
+    return i
+
+
+def ouverture(toks):
+    """Catégorie du premier élément de la phrase (point de décision n° 1)."""
+    i = _premier(toks)
+    if i >= len(toks):
+        return 'vide'
+    t, pos, morph, lem = toks[i][0], toks[i][1], toks[i][2], toks[i][3] if len(toks[i]) > 3 else toks[i][0].lower()
+    nxt = toks[i + 1] if i + 1 < len(toks) else ('', '', '', '')
+    if lem == 'en' and nxt[1] in ('VERB', 'AUX') and 'Part' in nxt[2]:
+        return 'gerondif'
+    if pos == 'SCONJ' or lem in ('lorsque', 'quand', 'si', 'comme', 'puisque', 'tandis'):
+        return 'subordonnee'
+    if pos == 'CCONJ' or lem in CONNECT:
+        return 'connecteur'
+    if pos == 'ADV':
+        return 'adverbe'
+    if pos == 'ADP':
+        return 'prepositionnel'
+    if pos in ('VERB', 'AUX'):
+        return 'participe' if 'Part' in morph else 'verbe'
+    if pos == 'PRON':
+        return 'pronom_sujet' if t.lower() in PRON_SUJ else 'pronom_autre'
+    if pos == 'PROPN':
+        return 'nom_propre'
+    if pos in ('DET', 'NOUN'):
+        return 'groupe_nominal'
+    return pos.lower() or 'autre'
+
+
+def lien(prev, toks):
+    """Comment la phrase se relie à la précédente (point de décision n° 2)."""
+    i = _premier(toks)
+    if i >= len(toks):
+        return 'vide'
+    t = toks[i]
+    lem = t[3] if len(t) > 3 else t[0].lower()
+    if lem in CONNECT or t[1] == 'CCONJ':
+        return 'connecteur'
+    if t[0].lower() in ANAPH:
+        return 'anaphore'
+    contenu = lambda x: x[1] in ('NOUN', 'VERB', 'ADJ', 'PROPN')
+    lp = {(x[3] if len(x) > 3 else x[0].lower()) for x in (prev or []) if contenu(x)}
+    if any((x[3] if len(x) > 3 else x[0].lower()) in lp for x in toks[:6] if contenu(x)):
+        return 'reprise_lexicale'
+    if t[0].lower() in PRON_SUJ:
+        return 'meme_sujet'
+    return 'juxtaposition'
+
+
+def fin(toks):
+    """Dernier mot et ponctuation finale (point de décision n° 3)."""
+    j, ponct = len(toks) - 1, ''
+    while j >= 0 and toks[j][1] in ('PUNCT', 'SPACE', 'SYM'):
+        if toks[j][0] in ('.', '!', '?', '…', ':', ';', '...') and not ponct:
+            ponct = '…' if toks[j][0] == '...' else toks[j][0]
+        j -= 1
+    if j < 0:
+        return 'vide', ponct
+    lem = toks[j][3] if len(toks[j]) > 3 else toks[j][0].lower()
+    if lem in ('pas', 'plus', 'jamais', 'rien', 'personne'):
+        return 'negation', ponct
+    return toks[j][1], ponct
+
+
+def classe_longueur(n):
+    return 'C' if n <= 8 else ('M' if n <= 20 else 'L')
+
+
+def traits_texte(phrases, mq):
+    """Traits de toutes les phrases, avec les traits de décision qui dépendent de la phrase précédente."""
+    out, prev_narr = [], None
+    for p in phrases:
+        f = traits_phrase(p, mq)
+        toks = p.tokens or []
+
+        def add(k, v=1.0):
+            f[k] = f.get(k, 0.0) + v
+        if toks:
+            fm, pc = fin(toks)
+            add('D:fin_' + fm)
+            add('D:ponct_' + ({'.': 'point', '!': 'exclam', '?': 'question', '…': 'susp', ':': 'deuxpoints', ';': 'pv'}.get(pc, 'aucune')))
+            nf = sum(1 for t in toks if 'VerbForm=Fin' in t[2])
+            add('D:verbes_finis_' + str(min(nf, 4)))
+            lems = [t[3] if len(t) > 3 else t[0].lower() for t in toks]
+            e, c = sum(1 for x in lems if x in EMO), sum(1 for x in lems if x in CORPS)
+            if e:
+                add('E:emotion_nommee', e)
+            if c:
+                add('E:corps', c)
+            if not p.dialogue:
+                add('D:ouv_' + ouverture(toks))
+                if prev_narr is not None:
+                    add('D:lien_' + lien(prev_narr.tokens, toks))
+                    add('R:' + classe_longueur(prev_narr.mots) + classe_longueur(p.mots))
+                prev_narr = p
+        out.append(f)
+    return out
 
 
 def fenetres(phrases, min_mots=45):
@@ -111,7 +234,7 @@ def contributions(idx, phrases, traits, mod):
 
 def analyser_texte(texte, nlp, mq, mod):
     phrases, paras = stylo.segmenter(texte, nlp)
-    traits = [traits_phrase(p, mq) for p in phrases]
+    traits = traits_texte(phrases, mq)
     fen = fenetres(phrases)
     res_fen = []
     for idx in fen:
@@ -129,7 +252,8 @@ def analyser_texte(texte, nlp, mq, mod):
 
 def libelle(k):
     t, _, x = k.partition(':')
-    return {'G': 'construction', 'F': 'mot-outil', 'L': 'mot', 'S': 'forme', 'C': 'marqueur'}.get(t, t) + ' « ' + x + ' »'
+    return {'G': 'construction', 'F': 'mot-outil', 'L': 'mot', 'S': 'forme', 'C': 'marqueur', 'D': 'décision',
+            'E': 'émotion', 'R': 'rythme'}.get(t, t) + ' « ' + x + ' »'
 
 
 def humanite(p):

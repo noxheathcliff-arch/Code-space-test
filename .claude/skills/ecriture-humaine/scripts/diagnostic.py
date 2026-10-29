@@ -43,10 +43,20 @@ LIB = {
     'part_present_1000': ('Participes présents / 1000', 'R-SYNT'),
     'adv_ment_1000': ('Adverbes en -ment / 1000', 'R-LEX'),
     'fragments_1000': ('Fragments sans verbe / 1000', 'R-RYTH'),
+    'autocorr_longueurs': ('Autocorrélation des longueurs (zones de rythme)', 'R-RYTH'),
+    'ponct_finale_expressive_pct': ('% phrases finissant par ? ! …', 'R-EXPR'),
+    'narr_questions_1000': ('Questions dans la narration / 1000', 'R-EXPR'),
+    'mots_par_replique': ('Mots par phrase de réplique', 'R-DIAL'),
+    'lien_meme_sujet_pct': ('% phrases au même sujet que la précédente', 'R-OUV'),
+    'lien_reprise_lexicale_pct': ('% reprises lexicales (nom répété)', 'R-VOIX'),
+    'fin_negation_pct': ('% phrases finissant sur une négation', 'R-ARCH'),
+    'emotion_nommee_1000': ('Émotions nommées / 1000', 'R-EMO'),
+    'verbes_mentaux_1000': ('Verbes mentaux / 1000', 'R-EMO'),
+    'noms_propres_1000': ('Noms propres / 1000', 'R-LEX'),
 }
 SEUIL_DELTA = 0.35
 # Mesures « défauts » : en avoir zéro n'est jamais une sur-correction.
-SANS_PLANCHER = {'accessoires_1000', 'formules_1000', 'contrastes_1000', 'on_1000', 'deux_points_1000',
+SANS_PLANCHER = {'fin_negation_pct', 'lien_meme_sujet_pct', 'verbes_mentaux_1000', 'accessoires_1000', 'formules_1000', 'contrastes_1000', 'on_1000', 'deux_points_1000',
                  'guillemets_1000', 'virgule_et_1000', 'ouv_repetee_pct', 'incises_neutres_pct',
                  'fragments_1000', 'para_ouvre_courte_pct'}
 
@@ -55,12 +65,12 @@ SANS_PLANCHER = {'accessoires_1000', 'formules_1000', 'contrastes_1000', 'on_100
 PLAFOND_STRICT = {'phr_moy', 'phr_longues_pct', 'prepositions_pct', 'adj_par_nom', 'coordination_pct',
                   'subordination_phrase', 'phr_ecart'}
 # Mesures secondaires : à corriger par la construction, jamais par ajout décoratif ; un écart résiduel est acceptable.
-SECONDAIRES = {'adj_par_nom', 'prepositions_pct', 'coordination_pct', 'subordination_phrase', 'part_present_1000',
+SECONDAIRES = {'noms_propres_1000', 'emotion_nommee_1000', 'lien_reprise_lexicale_pct', 'mots_par_replique', 'adj_par_nom', 'prepositions_pct', 'coordination_pct', 'subordination_phrase', 'part_present_1000',
                'adv_ment_1000', 'ressources_humaines_1000', 'phr_ecart', 'virgules_phrase'}
 # Sur-corrections typiques du pipeline (phrases allongées par les fusions, virgules trop rabotées, liaisons plaquées) :
 # seules celles-ci comptent à la porte 6 ; les autres ⚠ relèvent de la variance humaine normale et sont indicatives.
 SURCORR_PORTE = {'phr_moy', 'phr_longues_pct', 'virgules_1000', 'ressources_humaines_1000'}
-PORTE = {'primaires_max': 2, 'total_max': 4, 'surcorrection_max': 1, 'signalees_max': 45, 'signalees_max_explicatif': 50,
+PORTE = {'primaires_max': 3, 'total_max': 5, 'surcorrection_max': 1, 'signalees_max': 45, 'signalees_max_explicatif': 50,
          'humanite_min': 78, 'fenetres_ia_max': 25}
 
 
@@ -92,7 +102,7 @@ def points_texte(phrases):
     if not phrases or phrases[0].tokens is None:
         return None
     mq = stylo.charger_marqueurs()
-    traits = [points.traits_phrase(p, mq) for p in phrases]
+    traits = points.traits_texte(phrases, mq)
     res = []
     for idx in points.fenetres(phrases):
         v, mots = points.vecteur(idx, phrases, traits)
@@ -114,7 +124,9 @@ def porte6(prio, flags, phrases, genre, mots, cible=None, pts='calcul'):
     conds = [(f'✗ primaires {prim} ≤ {PORTE["primaires_max"]}', prim <= PORTE['primaires_max']),
              (f'✗ au total {tot} ≤ {PORTE["total_max"]}', tot <= PORTE['total_max']),
              (f'⚠ sur-corrections de pipeline {sur} ≤ {PORTE["surcorrection_max"]}', sur <= PORTE['surcorrection_max']),
-             (f'phrases signalées {sig:.0f} % ≤ {lim} %', sig <= lim)]
+             ]
+    # le taux de phrases signalées est informatif : sur 9 livres, des auteurs très ponctués (Martin) le dépassent sans être moins humains
+    info = f'(info : {sig:.0f} % de phrases signalées ; repère < {lim} %)'
     if pts == 'calcul':
         pts = points_texte(phrases)
     if pts:
@@ -123,6 +135,7 @@ def porte6(prio, flags, phrases, genre, mots, cible=None, pts='calcul'):
     if cible:
         ecart = 100 * (mots - cible) / cible
         conds.append((f'longueur {mots} mots, écart {ecart:+.0f} % (tolérance ±10 %)', abs(ecart) <= 10))
+    conds.append((info, True))
     return all(ok for _, ok in conds), conds
 
 
@@ -151,6 +164,8 @@ def rapport(m, phrases, flags, profil, genre, maxp, avant=None, nlp_ok=True, cib
         if abs(e.get('delta', 0)) < SEUIL_DELTA:
             continue
         v = m[k]
+        if v is None:
+            continue
         vd = verdict(v, e, k)
         h, ia = e['humain'], e.get('ia') or {}
         av = f'{avant[k]:.2f} | ' if avant and avant.get(k) is not None else ('— | ' if avant else '')
