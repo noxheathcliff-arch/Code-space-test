@@ -24,6 +24,21 @@ Les comparaisons portent sur 30 textes IA par genre, plus 8 textes « divers » 
 - les fins sur une scène ou une annonce plutôt que sur une maxime ;
 - les listes irrégulières.
 
+## Retour Pangram (texte « procrastination », v2) : 64 % IA
+
+Le modèle de points du skill donnait 90 à 100 d'humanité à **tous** les passages. Pangram en a pourtant classé la majorité IA. Le partage est net :
+- **classé humain** : le cas concret (Agnès, la lettre, les joints de la baignoire, la déclaration d'impôts) et la description factuelle d'une étude ;
+- **classé IA** : tout le raisonnement général qui suit (« la plupart d'entre nous », « Nous voilà d'une efficacité redoutable… tandis que… »), l'analogie filée et ses chutes imagées (« Le buffet les protège de nos mains maladroites. », « Chaque reproche alourdit la lettre… et referme d'un cran la porte du buffet. »), et l'antithèse élégante (« Loin de la complaisance avec laquelle nous le confondons… »).
+
+**Leçon.** La ponctuation, les mots-outils et la syntaxe peuvent être entièrement dans la zone humaine sans rien changer à ce que voit Pangram. Ce qui trahit la non-fiction, c'est le **mode de discours** : la généralisation éloquente, la métaphore qui conclut, la période équilibrée. Le skill ne mesure pas encore ces traits.
+
+**Règles provisoires, jusqu'à une recalibration**
+1. **Chaque paragraphe reste attaché à du concret** : le cas, une scène, un fait, une donnée, un exemple du lecteur. Pas de paragraphe entier de réflexion générale en « nous ».
+2. **Pas de chute imagée en fin de paragraphe.** L'image s'emploie au milieu d'un raisonnement, sans l'achever.
+3. **Pas de période balancée** (« Loin de X, Y », « Nous voilà… tandis que… », « non pas… mais… ») : dire la chose plus platement.
+4. **Pas de sur-dosage de liaisons** : ce texte était à 13,4 pour 1000, en haut de la zone humaine. Viser la médiane (≈ 8).
+5. **Préférer l'explication prosaïque**, voire un peu maladroite, d'un auteur qui explique, à l'éloquence d'un auteur qui « écrit bien ».
+
 ## Procédure spécifique
 
 **Avant la rédaction (étape 2)**
