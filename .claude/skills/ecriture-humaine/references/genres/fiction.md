@@ -1,5 +1,7 @@
 # Genre : fiction (roman, nouvelle, scène, récit, dialogue)
 
+> **Version 2** : calibré sur 4 romans (romance sombre française, Martin, Sapkowski, Fargetton). Lire aussi `../decisions.md` (ouvertures, liens, fins, rythme par zones) et `../emotion-scene.md` (arc des pics, réplique coupée, réponse à côté, changement de cadre, émotion nommée, sens dominant, longueur des répliques). Les chiffres ci-dessous datent de la version 1 (un seul roman) ; les zones à jour sont dans `../construction.md`.
+
 Profil : `--genre fiction`. Calibré sur un roman français contemporain à la première personne du présent (deux narrateurs alternés, registre courant à familier, romance sombre et suspense), comparé à 30 scènes générées par Claude sur des consignes du même type.
 
 ## Ce qui sépare le plus la fiction humaine de la fiction IA (|δ| ≥ 0,8)
