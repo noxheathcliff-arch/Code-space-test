@@ -1,0 +1,8 @@
+01|Écris un essai personnel (environ 800 mots) sur la lenteur.
+02|Écris un article de presse locale (environ 700 mots) sur la fermeture de la dernière boulangerie d'un village.
+03|Écris une nouvelle courte (environ 900 mots) sur un homme qui trouve une lettre qui ne lui est pas adressée.
+04|Écris une lettre (environ 600 mots) d'une grand-mère à son petit-fils qui vient de rater son bac.
+05|Écris une chronique d'opinion (environ 700 mots) sur le télétravail.
+06|Écris un récit de voyage (environ 800 mots) : une journée à Naples.
+07|Écris un dialogue (environ 800 mots) entre deux vieux amis qui se retrouvent après vingt ans.
+08|Écris un billet de blog personnel (environ 700 mots) : mon premier marathon.

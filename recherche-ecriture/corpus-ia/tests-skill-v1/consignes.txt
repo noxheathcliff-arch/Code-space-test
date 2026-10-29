@@ -1,0 +1,10 @@
+F1|fiction|Écris une scène de roman (environ 900 mots), première personne, présent : un homme attend dans une gare de province quelqu'un qui ne vient pas.
+F2|fiction|Écris une scène de roman (environ 900 mots) avec des dialogues : dans un bus scolaire, une adolescente comprend que sa meilleure amie lui a menti.
+F3|fiction|Écris une scène de roman (environ 900 mots), troisième personne, passé : un vieux marin refuse de vendre sa barque à un promoteur.
+F4|fiction|Écris une scène de roman (environ 900 mots), première personne : une cambrioleuse est surprise par le propriétaire rentré plus tôt que prévu.
+P1|pratique|Écris une section (environ 900 mots) d'un livre de développement personnel : arrêter de se comparer aux autres.
+P2|pratique|Écris une section (environ 900 mots) d'un livre de développement personnel : apprendre à demander de l'aide sans culpabiliser.
+P3|pratique|Écris une section (environ 900 mots) d'un livre de développement personnel : que faire face à un ami qui ne parle que de lui.
+E1|explicatif|Écris un passage (environ 900 mots) d'un livre de vulgarisation pour parents : le sommeil des adolescents.
+E2|explicatif|Écris un passage (environ 900 mots) d'un livre pour parents : pourquoi les jeunes enfants posent sans cesse la question « pourquoi ».
+E3|explicatif|Écris un passage (environ 900 mots) d'un livre pour parents : la jalousie entre frères et sœurs.

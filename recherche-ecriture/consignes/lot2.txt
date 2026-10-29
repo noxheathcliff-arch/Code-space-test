@@ -1,0 +1,24 @@
+FA1|Écris une scène de roman de fantasy (environ 900 mots), troisième personne, passé : dans un royaume médiéval, un vieux seigneur apprend la mort de son fils au combat.
+FA2|Écris une scène de roman de fantasy (environ 900 mots), avec beaucoup de dialogues : un chasseur de monstres négocie sa prime avec le bourgmestre d'un village terrorisé.
+FA3|Écris une scène de roman de fantasy (environ 900 mots) : une jeune princesse assiste à sa première exécution publique.
+FA4|Écris une scène de roman de fantasy (environ 900 mots) : deux frères ennemis se retrouvent sous une tente la veille d'une bataille.
+FA5|Écris une scène de roman de fantasy (environ 900 mots) : une guérisseuse soigne en secret un soldat ennemi dans sa cabane.
+FA6|Écris une scène de roman de fantasy (environ 900 mots) : un festin au château tourne mal quand un invité accuse l'hôte de trahison.
+CO1|Écris une scène de roman contemporain (environ 900 mots), troisième personne, présent : une adolescente reçoit un message d'un garçon qu'elle croyait avoir oublié.
+CO2|Écris une scène de roman contemporain (environ 900 mots) : une ancienne pilote de ligne retourne sur l'aérodrome où elle a appris à voler.
+CO3|Écris une scène de roman contemporain (environ 900 mots), avec des dialogues : deux inconnus coincés dans un ascenseur en panne le soir du réveillon.
+CO4|Écris une scène de roman contemporain (environ 900 mots), première personne : un adolescent insomniaque traverse Paris à vélo en pleine nuit.
+CO5|Écris une scène de roman contemporain (environ 900 mots) : une mère et sa fille se disputent dans la voiture au retour d'un rendez-vous chez le médecin.
+CO6|Écris une scène de roman contemporain (environ 900 mots) : un homme vide son casier le jour de son licenciement.
+PS1|Écris un passage (environ 900 mots) d'un livre de psychologie grand public : l'estime de soi, ce qu'elle est et sur quoi elle repose.
+PS2|Écris un passage (environ 900 mots) d'un livre de psychologie grand public : pourquoi certaines personnes ont tellement peur du regard des autres.
+PS3|Écris un passage (environ 900 mots) d'un livre de psychologie grand public : le perfectionnisme, ses avantages et ses pièges.
+PS4|Écris un passage (environ 900 mots) d'un livre de psychologie grand public : comment l'estime de soi se construit pendant l'enfance.
+PS5|Écris un passage (environ 900 mots) d'un livre de psychologie grand public : la comparaison sociale à l'ère des réseaux sociaux.
+PS6|Écris un passage (environ 900 mots) d'un livre de psychologie grand public : l'estime de soi dans la vie amoureuse.
+CM1|Écris un passage (environ 900 mots) d'un livre sur la communication : exprimer un besoin sans accuser l'autre (communication non violente).
+CM2|Écris un passage (environ 900 mots) d'un livre sur la communication : repérer qu'un interlocuteur ment grâce à son langage corporel.
+CM3|Écris un passage (environ 900 mots) d'un livre sur la communication : exprimer sa colère sans détruire la relation.
+CM4|Écris un passage (environ 900 mots) d'un livre sur la communication : l'écoute active, écouter vraiment quelqu'un.
+CM5|Écris un passage (environ 900 mots) d'un livre sur la communication : les jeux de pouvoir dans les conversations au travail.
+CM6|Écris un passage (environ 900 mots) d'un livre de développement personnel : se libérer de la culpabilité de décevoir ses parents.
