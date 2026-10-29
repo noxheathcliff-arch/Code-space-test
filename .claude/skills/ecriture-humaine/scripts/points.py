@@ -73,8 +73,8 @@ PRON_SUJ = {'je', 'tu', 'il', 'elle', 'on', 'nous', 'vous', 'ils', 'elles', "j'"
 CONNECT = {'et', 'mais', 'car', 'donc', 'puis', 'alors', 'ainsi', 'pourtant', 'cependant', 'enfin', 'ensuite', 'or',
            'aussi', 'néanmoins', 'toutefois', 'bref', 'sinon', 'certes'}
 ANAPH = {'il', 'elle', 'ils', 'elles', 'ce', 'cela', 'ça', 'celui', 'celle', 'ceux', 'celles', "c'"}
-EMO = set('''peur crainte terreur effroi angoisse anxiété panique colère rage fureur irritation agacement tristesse chagrin peine
-désespoir mélancolie joie bonheur allégresse plaisir honte culpabilité gêne embarras jalousie envie haine dégoût mépris surprise
+EMO = set('''peur crainte terreur effroi angoisse anxiété panique colère rage fureur irritation agacement tristesse chagrin
+désespoir mélancolie joie bonheur allégresse honte culpabilité embarras jalousie haine dégoût mépris surprise
 étonnement soulagement espoir amour tendresse fierté solitude nostalgie regret émotion sentiment effrayé terrifié furieux triste
 heureux joyeux honteux coupable jaloux soulagé ému anxieux nervosité nerveux inquiet inquiétude angoissé désespéré fier gêné
 craindre redouter apeuré paniqué exaspéré bouleversé émouvoir effrayer terrifier'''.split())

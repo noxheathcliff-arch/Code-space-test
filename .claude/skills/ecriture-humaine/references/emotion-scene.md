@@ -25,7 +25,7 @@ Moyennes autour des 719 pics humains et des 80 pics IA (fenêtres de 3 phrases ;
 
 **Règles**
 1. La montée se fait en **phrases ordinaires** : pas de phrases courtes « pour la tension » avant le pic.
-2. Le pic, c'est **une ou deux phrases contractées** (5 à 7 mots), pas un paragraphe de fragments.
+2. Le pic, c'est **une ou deux phrases contractées** (5 à 7 mots), pas un paragraphe de fragments. Ces phrases sont l'exception permise aux plafonds de phrases courtes (`construction.md` §D) et à la règle des zones de rythme (`decisions.md` §5).
 3. Juste après, **retour immédiat à la longueur normale**.
 
 ## 2. Ce que les humains font au pic et que l'IA ne fait jamais
@@ -80,7 +80,7 @@ Observé dans 6 passages humains sur 19, issus de 3 à 4 auteurs différents, et
 
 ## 7. Nommer les gens et les lieux
 
-Fiction : **41,5 noms propres** pour 1000 mots chez l'humain, contre 23,8 chez l'IA. L'humain désigne par le nom, le surnom ou le titre (« Ser Rodrik », « le Lannister », « Petit-Œil »). L'IA dit « il », « l'homme », « la femme ».
+Fiction : **41,5 noms propres** pour 1000 mots chez l'humain (médiane ; zone de 12 à 62), contre 23,8 chez l'IA. L'humain désigne par le nom, le surnom ou le titre (« Ser Rodrik », « le Lannister », « Petit-Œil »). L'IA dit « il », « l'homme », « la femme ».
 
 ## 8. Le dialogue
 

@@ -93,6 +93,7 @@ L'idée reçue veut qu'il faille « alterner phrases longues et courtes ». **C'
 **Règles**
 - Écrire par **zones de rythme**, pas par alternance. Une série de phrases courtes quand l'action presse, une série de longues quand on réfléchit ou décrit, puis on change de zone. On ne « casse » pas chaque phrase longue par une courte.
 - **Jamais une phrase courte suivie immédiatement d'une longue** comme effet de contraste systématique.
+- **Seule exception : l'entrée et la sortie d'un pic émotionnel** (`emotion-scene.md` §1). La contraction au pic, puis le retour à la longueur normale, créent deux transitions de longueur. Elles sont voulues, mais il n'y en a qu'une ou deux par scène. Ailleurs, on reste dans sa zone.
 - En non-fiction, **enchaîner les phrases longues de raisonnement** (deux, trois d'affilée) est humain. La monotonie IA, c'est la longueur moyenne répétée.
 
 Le diagnostic mesure l'autocorrélation (`Autocorrélation des longueurs`) : visée > 0 ; l'IA est en dessous de zéro.
@@ -103,7 +104,7 @@ Le diagnostic mesure l'autocorrélation (`Autocorrélation des longueurs`) : vis
 |---|---|---|
 | **Noms propres** | **41,5** | 23,8 |
 
-**Règle.** Nommer les personnes et les lieux. Au lieu de « il » pour la troisième fois, mettre le prénom ou un surnom ; au lieu de « la ville », son nom. L'IA se réfugie dans le pronom.
+**Règle.** Nommer les personnes et les lieux. Au lieu de « il » pour la troisième fois, mettre le prénom ou un surnom ; au lieu de « la ville », son nom. L'IA se réfugie dans le pronom. Le 41,5 est une médiane tirée par Martin et Sapkowski. La zone humaine est de 12 à 62 pour 1000 mots, soit **un nom toutes les deux à quatre phrases**, pas un par phrase.
 
 ---
 
