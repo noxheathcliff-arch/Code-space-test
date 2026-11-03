@@ -15,8 +15,6 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 import java.util.concurrent.TimeUnit
-import kotlin.math.pow
-import kotlin.random.Random
 
 /** Result of a generation attempt — lets the UI distinguish failure kinds. */
 sealed interface GenerationResult {
@@ -40,10 +38,7 @@ class GeminiService(
     private val model: String = BuildConfig.GEMINI_MODEL,
 ) {
     private val apiKeys: List<String> =
-        BuildConfig.GEMINI_API_KEYS
-            .split(",")
-            .map { it.trim() }
-            .filter { it.isNotEmpty() }
+        parseApiKeys(BuildConfig.GEMINI_API_KEYS)
 
     private val json = Json {
         ignoreUnknownKeys = true
@@ -97,7 +92,7 @@ class GeminiService(
         var lastCause: Throwable? = null
 
         repeat(MAX_RETRIES) { attempt ->
-            val apiKey = pickApiKey(usedKeys)
+            val apiKey = pickApiKey(apiKeys, usedKeys)
             usedKeys += apiKey
             try {
                 val request = Request.Builder()
@@ -112,13 +107,8 @@ class GeminiService(
                     val body = response.body?.string().orEmpty()
                     if (response.isSuccessful) {
                         val parsed = json.decodeFromString(GeminiResponse.serializer(), body)
-                        val text = parsed.candidates
-                            .firstOrNull()
-                            ?.content
-                            ?.parts
-                            ?.joinToString("") { it.text }
-                            ?.trim()
-                        if (!text.isNullOrBlank()) {
+                        val text = extractResponseText(parsed)
+                        if (text != null) {
                             return@withContext GenerationResult.Success(text)
                         }
                         parsed.promptFeedback?.blockReason?.let {
@@ -129,7 +119,7 @@ class GeminiService(
                         lastError = "HTTP ${response.code}"
                         Log.w(TAG, "Attempt ${attempt + 1} failed: ${response.code} ${truncate(body)}")
                         // 400/401/403 won't be fixed by rotating keys/retry fast; 429/5xx can.
-                        if (response.code in 400..403) {
+                        if (isNonRetryableStatus(response.code)) {
                             return@withContext GenerationResult.Error("HTTP ${response.code}: clé/paramètre invalide")
                         }
                     }
@@ -146,46 +136,11 @@ class GeminiService(
         GenerationResult.Error(lastError, lastCause)
     }
 
-    private fun pickApiKey(used: Set<String>): String {
-        val available = apiKeys.filter { it !in used }
-        return (available.ifEmpty { apiKeys }).random(Random)
-    }
-
-    private fun backoffMillis(attempt: Int): Long =
-        (2.0.pow(attempt) * BASE_DELAY_MS).toLong() + Random.nextLong(0, 1000)
-
-    private fun buildConversationText(context: ConversationContext): String {
-        if (context.messages.isEmpty()) return "Aucun message"
-        return context.messages.takeLast(MAX_CONTEXT_MESSAGES).joinToString("\n") { message ->
-            val who = if (message.isFromUser) "Moi" else message.sender
-            "$who: ${message.content}"
-        }
-    }
-
-    private fun buildSystemPrompt(prompts: List<Prompt>, tonality: String): String {
-        val enabled = prompts.filter { it.isEnabled }
-        val builder = StringBuilder(
-            "Tu es un assistant qui génère des réponses courtes et précises.",
-        )
-        if (enabled.isNotEmpty()) {
-            builder.append("\n\nRÈGLES À RESPECTER:")
-            enabled.forEach { builder.append("\n- ").append(it.content) }
-        }
-        if (tonality.isNotBlank()) {
-            builder.append("\n\nTONALITÉ À ADOPTER: ").append(tonality)
-        }
-        return builder.toString()
-    }
-
-    private fun truncate(s: String, max: Int = 200) = if (s.length > max) s.take(max) + "…" else s
-
     companion object {
         private const val TAG = "GeminiService"
         const val HOST = "generativelanguage.googleapis.com"
         private const val BASE_URL = "https://$HOST/v1beta"
         private const val MAX_RETRIES = 3
-        private const val BASE_DELAY_MS = 1000L
-        private const val MAX_CONTEXT_MESSAGES = 5
         private val JSON_MEDIA_TYPE = "application/json; charset=utf-8".toMediaType()
     }
 }
